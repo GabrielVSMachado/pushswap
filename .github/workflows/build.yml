@@ -20,6 +20,9 @@
         - name: all
           run: make
 
+        - name: bonus
+          run: make bonus
+
         - name: clean
           run: make clean
 

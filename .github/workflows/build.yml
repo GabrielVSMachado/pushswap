@@ -1,0 +1,30 @@
+  name: Build
+
+  on:
+    push:
+      branches: [ master ]
+    pull_request:
+      branches: [ master ]
+
+  jobs:
+    build:
+      runs-on: ubuntu-focal
+
+      steps:
+        - uses: actions/checkout@v2
+
+        - name: Setup
+          run: |
+            git submodule update --init
+
+        - name: all
+          run: make
+
+        - name: clean
+          run: make clean
+
+        - name: fclean
+          run: make fclean
+
+        - name: re
+          run: make re

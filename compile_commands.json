@@ -1,0 +1,19 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-Iheaders",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/gabriel/Documents/Projects_42/pushswap",
+    "file": "/home/gabriel/Documents/Projects_42/pushswap/src/main.c",
+    "output": "/home/gabriel/Documents/Projects_42/pushswap/obj/main.o"
+  }
+]

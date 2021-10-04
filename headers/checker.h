@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-int	validated_inputs(char **inputs, int len);
+int		validated_inputs(char **inputs, int len);
+t_list	*make_lst(char **numbers, int len);
 
 #endif

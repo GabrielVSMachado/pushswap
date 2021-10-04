@@ -12,7 +12,7 @@
 
 #include "checker.h"
 
-static t_list	*make_lst(char **numbers, int len)
+t_list	*make_lst(char **numbers, int len)
 {
 	t_list	*head;
 	int		*tmp;
@@ -30,34 +30,11 @@ static t_list	*make_lst(char **numbers, int len)
 	return (head);
 }
 
-static int	equals(char **numbers, int len)
-{
-	t_list	*head;
-	t_list	*tmp;
-	t_list	*tmp_2;
-
-	head = make_lst(numbers, len);
-	if (!head)
-		return (ft_lstclear(&head, free), 1);
-	tmp = head;
-	while (tmp)
-	{
-		tmp_2 = tmp->next;
-		while (tmp_2)
-		{
-			if (*(int *)tmp->content == *(int *)tmp_2->content)
-				return (ft_lstclear(&head, free), 1);
-			tmp_2 = tmp_2->next;
-		}
-		tmp = tmp->next;
-	}
-	return (ft_lstclear(&head, free), 0);
-}
-
 int	validated_inputs(char **inputs, int len)
 {
-	int		n_args;
 	char	*tmp;
+	int		n_args;
+	int		n_args_next;
 
 	n_args = 1;
 	while (n_args < len)
@@ -71,9 +48,11 @@ int	validated_inputs(char **inputs, int len)
 				return (1);
 			tmp++;
 		}
+		n_args_next = n_args;
+		while (++n_args_next < len)
+			if (!ft_strcmp(inputs[n_args_next], inputs[n_args]))
+				return (1);
 		n_args++;
 	}
-	if (equals(inputs, len))
-		return (1);
 	return (0);
 }

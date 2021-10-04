@@ -17,4 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+int	validated_inputs(char **inputs, int len);
+
 #endif

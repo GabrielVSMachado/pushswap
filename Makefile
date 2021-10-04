@@ -1,5 +1,5 @@
 NAME := push_swap
-CFLAGS := -Wall -Werror -Wextra
+CFLAGS := -Wall -Werror -Wextra -g
 RM := rm -rf
 
 SRC_DIR := src
@@ -14,7 +14,7 @@ LIBRARY := -L$(LIBFT_DIR) -lft
 HEADERS := -I$(HEADER_DIR) -I$(LIBFT_DIR)
 
 FILES := main.c
-FILES_BONUS := main.c
+FILES_BONUS := checker.c utils_checker.c
 
 SRC_BONUS := $(addprefix $(BONUS_DIR)/,$(FILES_BONUS))
 OBJ_BONUS := $(SRC_BONUS:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)

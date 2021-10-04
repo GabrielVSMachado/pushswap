@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/28 20:35:30 by gvitor-s          #+#    #+#             */
-/*   Updated: 2021/09/28 20:35:30 by gvitor-s         ###   ########.fr       */
+/*   Created: 2021/10/04 11:18:02 by gvitor-s          #+#    #+#             */
+/*   Updated: 2021/10/04 11:18:02 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	main(int argc, char *argv[])
 {
-	if (argc != 2)
+	if (argc < 2)
 		exit(EXIT_FAILURE);
-	write(1, argv[1], ft_strlen(argv[1]));
+	if (validated_inputs(argv, argc))
+		write(2, "Error", 5);
+	else
+		write(1, "OK", 2);
 	return (EXIT_SUCCESS);
 }

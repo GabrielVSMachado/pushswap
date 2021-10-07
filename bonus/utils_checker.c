@@ -32,27 +32,4 @@ t_list	*make_lst(char **numbers, int len)
 
 int	validated_inputs(char **inputs, int len)
 {
-	char	*tmp;
-	int		n_args;
-	int		n_args_next;
-
-	n_args = 1;
-	while (n_args < len)
-	{
-		tmp = inputs[n_args];
-		if (!*tmp)
-			return (1);
-		while (*tmp)
-		{
-			if ((*tmp != '-' || *tmp != '+') && !ft_isdigit(*tmp))
-				return (1);
-			tmp++;
-		}
-		n_args_next = n_args;
-		while (++n_args_next < len)
-			if (!ft_strcmp(inputs[n_args_next], inputs[n_args]))
-				return (1);
-		n_args++;
-	}
-	return (0);
 }

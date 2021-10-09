@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   utils_pushswap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/27 17:54:53 by gvitor-s          #+#    #+#             */
-/*   Updated: 2021/09/27 17:54:53 by gvitor-s         ###   ########.fr       */
+/*   Created: 2021/10/08 16:23:42 by gvitor-s          #+#    #+#             */
+/*   Updated: 2021/10/08 16:23:42 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "push_swap.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+void	swap(t_list **lst)
+{
+	t_list	*temp;
 
-void	swap(t_list **lst);
-#endif
+	temp = *lst;
+	*lst = (*lst)->next;
+	temp->next = (*lst)->next;
+	(*lst)->next = temp;
+}

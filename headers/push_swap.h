@@ -17,5 +17,6 @@
 # include <unistd.h>
 # include "libft.h"
 
-void	swap(t_list **lst);
+int	swap(t_list **lst);
+int	push(t_list **from, t_list **to);
 #endif

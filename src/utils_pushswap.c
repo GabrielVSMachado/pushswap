@@ -12,12 +12,23 @@
 
 #include "push_swap.h"
 
-void	swap(t_list **lst)
+int	swap(t_list **lst)
 {
 	t_list	*temp;
 
+	if (!(*lst)->next)
+		return (1);
 	temp = *lst;
 	*lst = (*lst)->next;
 	temp->next = (*lst)->next;
 	(*lst)->next = temp;
+	return (0);
+}
+
+int	push(t_list **from, t_list **to)
+{
+	(*to) = (*from);
+	(*from) = (*from)->next;
+	(*to)->next = NULL;
+	return (0);
 }

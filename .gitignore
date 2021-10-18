@@ -1,5 +1,5 @@
 obj/*
 push_swap
-libft/*
+libft/
 .cache
 checker_linux

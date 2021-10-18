@@ -24,4 +24,4 @@ jobs:
           pip install norminette
       
       - name: run Norminette
-        run: python3 -m norminette
+        run: python3 -m norminette src headers libft bonus

@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: make test
         run: make test
-      
+
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -25,7 +25,7 @@ jobs:
   run-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download@v2
+      - uses: actions/download-artifact@v2
         with:
           name: test-file
 

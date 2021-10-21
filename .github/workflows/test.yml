@@ -23,6 +23,7 @@ jobs:
           path: test
 
   run-test:
+    runs-on: ubuntu-latest
     steps:
       - name: download-artifact
         uses: actions/download-artifact@v2

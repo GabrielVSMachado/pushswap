@@ -36,6 +36,6 @@ jobs:
           name: test-file
 
       - name: run test
-        run: test
+        run: ./test
         shell: bash
 

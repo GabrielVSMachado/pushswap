@@ -19,12 +19,20 @@ jobs:
 
       - name: make test
         run: make test
+      
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-file
 
   run-test:
     needs: build-test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v2
       - name: run test
-        run: ./test
+        run: |
+          chmod +x test
+          ./test
         shell: bash
 

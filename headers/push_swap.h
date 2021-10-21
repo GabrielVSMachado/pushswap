@@ -19,4 +19,6 @@
 
 int	swap(t_list **lst);
 int	push(t_list **from, t_list **to);
+int	rotate_to_up(t_list **stack);
+int	rotate_to_down(t_list **stack);
 #endif

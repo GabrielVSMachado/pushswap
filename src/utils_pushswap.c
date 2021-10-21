@@ -27,8 +27,49 @@ int	swap(t_list **lst)
 
 int	push(t_list **from, t_list **to)
 {
+	t_list	*tmp;
+
+	if (!from || !to)
+		return (1);
+	tmp = *to;
 	(*to) = (*from);
 	(*from) = (*from)->next;
-	(*to)->next = NULL;
+	(*to)->next = tmp;
+	return (0);
+}
+
+int	rotate_to_up(t_list **stack)
+{
+	t_list	*last_node;
+	int		size;	
+
+	if (!stack)
+		return (1);
+	size = ft_lstsize(*stack);
+	last_node = ft_lstlast(*stack);
+	last_node->next = *stack;
+	(*stack) = (*stack)->next;
+	last_node = (*stack);
+	while (--size)
+		last_node = last_node->next;
+	last_node->next = NULL;
+	return (0);
+}
+
+int	rotate_to_down(t_list **stack)
+{
+	t_list	*last_node;
+	int		size_lst;
+
+	if (!stack)
+		return (1);
+	size_lst = ft_lstsize(*stack);
+	last_node = ft_lstlast(*stack);
+	last_node->next = (*stack);
+	(*stack) = last_node;
+	last_node = (*stack);
+	while (--size_lst)
+		last_node = last_node->next;
+	last_node->next = NULL;
 	return (0);
 }

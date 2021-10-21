@@ -23,6 +23,7 @@ jobs:
           path: test
 
   run-test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download@v2
         with:

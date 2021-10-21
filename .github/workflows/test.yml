@@ -30,6 +30,6 @@ jobs:
           name: test-file
 
       - name: run test
-      - shell: bash
+        shell: bash
         run: test
 

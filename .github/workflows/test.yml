@@ -27,6 +27,7 @@ jobs:
           path: test
 
   run-test:
+    needs: build-test
     runs-on: ubuntu-latest
     steps:
       - name: download-artifact

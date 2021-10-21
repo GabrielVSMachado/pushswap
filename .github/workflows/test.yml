@@ -36,6 +36,8 @@ jobs:
           name: test-file
 
       - name: run test
-        run: ./test
+        run: |
+          chmod +x test
+          ./test
         shell: bash
 

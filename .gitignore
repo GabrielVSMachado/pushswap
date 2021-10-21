@@ -3,3 +3,5 @@ push_swap
 libft/
 .cache
 checker_linux
+vg*
+test

@@ -1,6 +1,7 @@
 NAME := push_swap
 CFLAGS := -Wall -Werror -Wextra -g
 RM := rm -rf
+CC := gcc
 
 SRC_DIR := src
 OBJ_DIR := obj
@@ -9,12 +10,12 @@ BONUS_DIR := bonus
 HEADER_DIR := headers
 
 CHECKER := checker
-LIBFT := libft.a
+LIBFT := $(LIBFT_DIR)/libft.a
 LIBRARY := -L$(LIBFT_DIR) -lft
 HEADERS := -I$(HEADER_DIR) -I$(LIBFT_DIR)
 
 # TEST PART
-NAME_TEST := test
+TEST := ./test
 TEST_DIR := Tests
 HEADERS_TEST := $(HEADERS) -I$(TEST_DIR)
 
@@ -72,8 +73,6 @@ re: fclean all
 bonus: $(OBJ_BONUS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ_BONUS) $(HEADERS) -o $(CHECKER) $(LIBRARY)
 
-test: $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
-	$(CC) $(OBJ_TEST) $(OBJ_UTILS) $(HEADERS_TEST) -o $(NAME_TEST) $(LIBRARY)
-	@./$(NAME_TEST)
-	$(RM) $(NAME_TEST)
+$(TEST): $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
+	$(CC) $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY)
 .PHONY: all clean fclean re

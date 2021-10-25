@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  build-test:
+  build-run-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,25 +19,14 @@ jobs:
 
       - name: make test
         run: make test
+
+      - name: put output of test in file
+        run: |
+          ./test > test_output
+        shell: bash
       
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: test-file
-          path: test
-
-  run-test:
-    needs: build-test
-    runs-on: ubuntu-latest
-    steps:
-      - name: download-artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: test-file
-
-      - name: run test
-        run: |
-          chmod +x test
-          ./test
-        shell: bash
-
+          path: test_output

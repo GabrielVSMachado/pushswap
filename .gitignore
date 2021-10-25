@@ -5,3 +5,4 @@ libft/
 checker_linux
 vg*
 test
+*.json

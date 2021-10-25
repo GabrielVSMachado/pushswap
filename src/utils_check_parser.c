@@ -45,3 +45,36 @@ int	check_repeated(int argc, char **argv)
 	}
 	return (0);
 }
+
+int	check_greater_than_max_or_less_than_min_int(int argc, char **argv)
+{
+	int	len_str_num;
+
+	while (--argc)
+	{
+		len_str_num = ft_strlen(argv[argc]);
+		if (len_str_num < 10)
+			continue ;
+		else
+			if ((len_str_num == 10 && argv[argc][len_str_num - 1] != '7')
+				|| (len_str_num == 11 && argv[argc][len_str_num - 1] != '8'))
+				return (1);
+	}
+	return (0);
+}
+
+t_list	*make_llst_of_ints(int size, char **numbers_as_strings)
+{
+	t_list	*head;
+	int		*tmp;
+
+	head = NULL;
+	while (--size)
+	{
+		tmp = (int *)malloc(sizeof(int));
+		*tmp = ft_atoi(numbers_as_strings[size]);
+		ft_lstadd_front(&head, ft_lstnew(tmp));
+	}
+	tmp = NULL;
+	return (head);
+}

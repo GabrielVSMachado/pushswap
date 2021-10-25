@@ -23,7 +23,7 @@ SRC_TEST := $(TEST_DIR)/tests.c
 OBJ_TEST := $(SRC_TEST:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # MANDATORY PART
-FILES_UTILS := utils_pushswap.c
+FILES_UTILS := moviment_functions.c utils_check_parser.c
 FILES := main.c $(FILES_UTILS)
 
 SRC := $(addprefix $(SRC_DIR)/,$(FILES))

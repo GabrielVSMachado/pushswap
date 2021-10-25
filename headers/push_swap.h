@@ -17,8 +17,13 @@
 # include <unistd.h>
 # include "libft.h"
 
+/* MOVIMENT FUNCTIONS */
 int	swap(t_list **lst);
 int	push(t_list **from, t_list **to);
 int	rotate_to_up(t_list **stack);
 int	rotate_to_down(t_list **stack);
+
+/* CHECK AND PARSER FUNCTIONS */
+int	check_isdigit(int argc, char **argv);
+int	check_repeated(int argc, char **argv);
 #endif

@@ -9,13 +9,13 @@ LIBFT_DIR := libft
 BONUS_DIR := bonus
 HEADER_DIR := headers
 
-CHECKER := checker
+BONUS := checker
 LIBFT := $(LIBFT_DIR)/libft.a
 LIBRARY := -L$(LIBFT_DIR) -lft
 HEADERS := -I$(HEADER_DIR) -I$(LIBFT_DIR)
 
 # TEST PART
-TEST := ./test
+TEST := test
 TEST_DIR := Tests
 HEADERS_TEST := $(HEADERS) -I$(TEST_DIR)
 
@@ -33,11 +33,10 @@ SRC_UTILS := $(addprefix $(SRC_DIR)/,$(FILES_UTILS))
 OBJ_UTILS := $(SRC_UTILS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 #BONUS PART
-FILES_BONUS := checker.c utils_checker.c
+FILES_BONUS := checker.c get_next_line.c get_next_line_utils.c
 
 SRC_BONUS := $(addprefix $(BONUS_DIR)/,$(FILES_BONUS))
 OBJ_BONUS := $(SRC_BONUS:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
-
 
 all: $(NAME)
 
@@ -53,7 +52,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER_DIR)/push_swap.h
 
 $(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c $(HEADER_DIR)/checker.h
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -D BUFFER_SIZE=4 -o $@
 
 $(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
@@ -65,14 +64,16 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(CHECKER)
+	$(RM) $(BONUS)
 	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-bonus: $(OBJ_BONUS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ_BONUS) $(HEADERS) -o $(CHECKER) $(LIBRARY)
+bonus:  $(LIBFT) $(OBJ_BONUS) $(OBJ_UTILS)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) $(OBJ_UTILS) $(HEADERS) -o $(BONUS) $(LIBRARY)
+
 
 $(TEST): $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
 	$(CC) $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY)
+
 .PHONY: all clean fclean re

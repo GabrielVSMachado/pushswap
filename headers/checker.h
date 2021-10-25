@@ -16,8 +16,7 @@
 # include "libft.h"
 # include <unistd.h>
 # include <stdlib.h>
-
-int		validated_inputs(char **inputs, int len);
-t_list	*make_lst(char **numbers, int len);
+# include "push_swap.h"
+# include "get_next_line.h"
 
 #endif

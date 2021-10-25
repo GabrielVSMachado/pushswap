@@ -16,7 +16,7 @@ int	swap(t_list **lst)
 {
 	t_list	*temp;
 
-	if (!(*lst)->next)
+	if (!lst || !*lst || !(*lst)->next)
 		return (1);
 	temp = *lst;
 	*lst = (*lst)->next;

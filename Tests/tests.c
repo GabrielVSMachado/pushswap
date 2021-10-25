@@ -48,6 +48,21 @@ MU_TEST(test_swap_with_one_number_and_second_null)
 	head = NULL;
 }
 
+
+MU_TEST(test_swap_NULL)
+{
+	mu_check(swap(NULL) == 1);
+}
+
+
+MU_TEST(test_swap_pointer_which_point_to_null)
+{
+	t_list	*head;
+
+	head = NULL;
+	mu_check(swap(&head) == 1);
+}
+
 /* TESTS FOR FUNCTION PUSH*/
 
 
@@ -671,7 +686,7 @@ MU_TEST(test_rotate_down_twice_ten_numbers)
 }
 
 
-/* CHECK INPUTS */
+/* CHECK INPUTS IF ARE DIGITS */
 MU_TEST(test_check_isdigit_three_inputs_with_the_seconds_with_one_letter_btween_digits)
 {
 	char	*argv[3];
@@ -870,6 +885,65 @@ MU_TEST(test_check_isdigit_with_letters_and_symbols)
 }
 
 
+/* TEST CHECK IF DIGIT IS GREATER THAN MAX_INT OR LESS THAN MIN_INT */
+MU_TEST(test_input_digit_greater_than_int_max_and_expected_1)
+{
+	char	*argv[2];
+
+	argv[0] = ft_strdup("push_swap");
+	argv[1] = ft_strdup("2147483648");
+
+	mu_check(check_greater_than_max_or_less_than_min_int(2, argv) == 1);
+
+	free(argv[1]);
+	free(argv[0]);
+}
+
+
+MU_TEST(test_digit_is_equal_int_max_and_expected_0)
+{
+	char	*argv[2];
+
+	argv[0] = ft_strdup("push_swap");
+	argv[1] = ft_strdup("2147483647");
+
+	mu_check(check_greater_than_max_or_less_than_min_int(2, argv) == 0);
+
+	free(argv[1]);
+	free(argv[0]);
+}
+
+
+MU_TEST(test_digit_is_equal_int_min_and_expected_0)
+{
+	char	*argv[2];
+
+	argv[0] = ft_strdup("push_swap");
+	argv[1] = ft_strdup("-2147483648");
+
+	mu_check(check_greater_than_max_or_less_than_min_int(2, argv) == 0);
+
+	free(argv[1]);
+	free(argv[0]);
+}
+
+
+MU_TEST(test_digit_is_less_than_int_min_and_expected_1)
+{
+	char	*argv[2];
+
+	argv[0] = ft_strdup("push_swap");
+	argv[1] = ft_strdup("-2147483649");
+
+	mu_check(check_greater_than_max_or_less_than_min_int(2, argv) == 1);
+
+	free(argv[1]);
+	free(argv[0]);
+}
+
+
+
+
 /* TEST CHECK REPEATED ARGUMENTS */
 MU_TEST(test_check_repeated_two_number_one)
 {
@@ -951,10 +1025,77 @@ MU_TEST(test_check_repeated_three_numbers_space_of_one)
 }
 
 
+// TESTS OF FUNCTION MAKE_LLST_OF_INTS
+MU_TEST(test_input_two_strings_of_numbers_and_expected_a_llst_with_two_ints)
+{
+	char	*numbers_as_strings[] = {"push_swap", "12", "1"};
+	t_list	*head;
+
+	head = make_llst_of_ints(3, numbers_as_strings);
+
+	mu_assert_int_eq(12, *(int *)head->content);
+	mu_assert_int_eq(1, *(int *)head->next->content);
+
+	free(head->next->content);
+	free(head->next);
+	free(head->content);
+	free(head);
+	head = NULL;
+}
+
+
+MU_TEST(test_input_three_strings_of_numbers_and_expected_a_llst_with_three_ints)
+{
+	char	*numbers_as_strings[] = {"push_swap", "1", "2", "3"};
+	t_list	*head;
+
+	head = make_llst_of_ints(4, numbers_as_strings);
+
+	mu_assert_int_eq(1, *(int *)head->content);
+	mu_assert_int_eq(2, *(int *)head->next->content);
+	mu_assert_int_eq(3, *(int *)head->next->next->content);
+
+	mu_check(head->next->next->next == NULL);
+
+	free(head->next->next->content);
+	free(head->next->next);
+	free(head->next->content);
+	free(head->next);
+	free(head->content);
+	free(head);
+
+	head = NULL;
+}
+
+
+MU_TEST(test_input_negative_numbers_as_strings_and_expect_same_as_int)
+{
+	char	*numbers_as_strings[] = {"push_swap", "-2", "-4", "-1"};
+	t_list	*head;
+
+	head = make_llst_of_ints(4, numbers_as_strings);
+
+	mu_assert_int_eq(-2, head->content);
+	mu_assert_int_eq(-4, head->next->content);
+	mu_assert_int_eq(-1, head->next->next->content);
+
+	free(head->next->next->content);
+	free(head->next->next);
+	free(head->next->content);
+	free(head->next);
+	free(head->content);
+	free(head);
+
+	head = NULL;
+}
+
+
 MU_TEST_SUITE(test_suite_swap)
 {
 	MU_RUN_TEST(test_swap_two_integers);
 	MU_RUN_TEST(test_swap_with_one_number_and_second_null);
+	MU_RUN_TEST(test_swap_NULL);
+	MU_RUN_TEST(test_swap_pointer_which_point_to_null);
 }
 
 
@@ -1006,6 +1147,14 @@ MU_TEST_SUITE(test_suite_check_inputs)
 	MU_RUN_TEST(test_check_isdigit_with_letters_and_symbols);
 }
 
+MU_TEST_SUITE(test_suite_check_greater_than_max_or_less_than_min_int)
+{
+	MU_RUN_TEST(test_input_digit_greater_than_int_max_and_expected_1);
+	MU_RUN_TEST(test_digit_is_equal_int_max_and_expected_0);
+	MU_RUN_TEST(test_digit_is_equal_int_min_and_expected_0);
+	MU_RUN_TEST(test_digit_is_less_than_int_min_and_expected_1);
+}
+
 
 MU_TEST_SUITE(test_suite_check_repeated)
 {
@@ -1016,6 +1165,15 @@ MU_TEST_SUITE(test_suite_check_repeated)
 }
 
 
+MU_TEST_SUITE(test_suite_make_lst_with_ints)
+{
+	MU_RUN_TEST(test_input_two_strings_of_numbers_and_expected_a_llst_with_two_ints);
+	MU_RUN_TEST(test_input_three_strings_of_numbers_and_expected_a_llst_with_three_ints);
+}
+
+
+
+
 int	main(int argc, char *argv[])
 {
 	MU_RUN_SUITE(test_suite_swap);
@@ -1024,6 +1182,8 @@ int	main(int argc, char *argv[])
 	MU_RUN_SUITE(test_suite_rotate_down);
 	MU_RUN_SUITE(test_suite_check_inputs);
 	MU_RUN_SUITE(test_suite_check_repeated);
+	MU_RUN_SUITE(test_suite_make_lst_with_ints);
+	MU_RUN_SUITE(test_suite_check_greater_than_max_or_less_than_min_int);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

@@ -43,7 +43,7 @@ int	rotate_to_up(t_list **stack)
 	t_list	*last_node;
 	int		size;	
 
-	if (!stack)
+	if (!stack || !*stack)
 		return (1);
 	size = ft_lstsize(*stack);
 	last_node = ft_lstlast(*stack);
@@ -61,7 +61,7 @@ int	rotate_to_down(t_list **stack)
 	t_list	*last_node;
 	int		size_lst;
 
-	if (!stack)
+	if (!stack || !*stack)
 		return (1);
 	size_lst = ft_lstsize(*stack);
 	last_node = ft_lstlast(*stack);

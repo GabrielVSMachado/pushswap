@@ -86,8 +86,6 @@ static void	init_checker(int size_array, char **numbers_as_str)
 			write(2, "Error", 5);
 			exit(EXIT_FAILURE);
 		}
-		print_stack(&s.stack_a, 'a');
-		print_stack(&s.stack_b, 'b');
 		free(movement);
 	}
 	if (check_sorting_lst(&s))

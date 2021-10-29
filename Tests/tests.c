@@ -322,6 +322,17 @@ MU_TEST(test_rotate_up_receive_NULL)
 	mu_check(rotate_to_up(NULL) == 1);
 }
 
+
+MU_TEST(test_rotate_up_receive_NULL_in_a_variable)
+{
+	t_list *head;
+
+	head = NULL;
+
+	mu_check(rotate_to_up(&head) == 1);
+}
+
+
 MU_TEST(test_rotate_up_fifteen_numbers_one_time)
 {
 	t_list	*head;
@@ -609,6 +620,16 @@ MU_TEST(test_rotate_down_fifteen_numbers)
 MU_TEST(test_rotate_down_with_parameter_NULL)
 {
 	mu_check(rotate_to_down(NULL) == 1);
+}
+
+
+MU_TEST(test_rotate_down_receive_NULL_in_a_variable)
+{
+	t_list	*head;
+
+	head = NULL;
+
+	mu_check(rotate_to_down(&head) == 1);
 }
 
 
@@ -1118,6 +1139,7 @@ MU_TEST_SUITE(test_suite_rotate_up)
 	MU_RUN_TEST(test_rotate_up_receive_NULL);
 	MU_RUN_TEST(test_rotate_up_fifteen_numbers_one_time);
 	MU_RUN_TEST(test_rotate_up_twice_ten_numbers);
+	MU_RUN_TEST(test_rotate_up_receive_NULL_in_a_variable);
 }
 
 
@@ -1128,6 +1150,7 @@ MU_TEST_SUITE(test_suite_rotate_down)
 	MU_RUN_TEST(test_rotate_down_fifteen_numbers);
 	MU_RUN_TEST(test_rotate_down_with_parameter_NULL);
 	MU_RUN_TEST(test_rotate_down_twice_ten_numbers);
+	MU_RUN_TEST(test_rotate_down_receive_NULL_in_a_variable);
 }
 
 

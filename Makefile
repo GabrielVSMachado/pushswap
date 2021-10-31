@@ -23,7 +23,7 @@ SRC_TEST := $(TEST_DIR)/tests.c
 OBJ_TEST := $(SRC_TEST:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # MANDATORY PART
-FILES_UTILS := moviment_functions.c utils_check_parser.c
+FILES_UTILS := moviment_functions.c utils_check_parser.c error.c
 FILES := main.c $(FILES_UTILS)
 
 SRC := $(addprefix $(SRC_DIR)/,$(FILES))
@@ -65,6 +65,7 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(BONUS)
+	$(RM) $(TEST)
 	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
@@ -73,7 +74,7 @@ bonus:  $(LIBFT) $(OBJ_BONUS) $(OBJ_UTILS)
 	$(CC) $(CFLAGS) $(OBJ_BONUS) $(OBJ_UTILS) $(HEADERS) -o $(BONUS) $(LIBRARY)
 
 
-$(TEST): $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
-	$(CC) $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY)
+test: $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
+	$(CC) -fsanitize=address $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY)
 
 .PHONY: all clean fclean re

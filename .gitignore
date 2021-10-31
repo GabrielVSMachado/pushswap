@@ -6,3 +6,4 @@ checker_linux
 vg*
 test
 *.json
+push_swap_visualizer

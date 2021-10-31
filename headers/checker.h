@@ -19,10 +19,4 @@
 # include "push_swap.h"
 # include "get_next_line.h"
 
-struct s_stacks
-{
-	t_list	*stack_a;
-	t_list	*stack_b;
-};
-
 #endif

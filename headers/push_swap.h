@@ -19,6 +19,12 @@
 # include <limits.h>
 # include "libft.h"
 
+typedef struct s_stacks
+{
+	t_list	*stack_a;
+	t_list	*stack_b;
+}	t_stacks;
+
 /* MOVIMENT FUNCTIONS */
 int		swap(t_list **lst);
 int		push(t_list **from, t_list **to);
@@ -32,4 +38,8 @@ int		check_greater_than_max_or_less_than_min_int(int argc, char **argv);
 
 /* FUNCTIONS TO MAKE A LINKED LIST WITH THE INPUTS */
 t_list	*make_llst_of_ints(int size, char **numbers_as_strings);
+
+/* FUNCTION TO HANDLE ERRORS */
+int		_error(t_stacks *stacks);
+void	clear_stacks(t_stacks *stacks);
 #endif

@@ -1111,6 +1111,46 @@ MU_TEST(test_input_negative_numbers_as_strings_and_expect_same_as_int)
 }
 
 
+/* TEST FUNCTION ERROR */
+MU_TEST(test_error_receive_NULL_expected_1)
+{
+	mu_check(_error(NULL) == 1);
+}
+
+
+MU_TEST(test_error_receive_stack_a_not_NULL_and_stack_b_NULL_expected_no_memory_leak_and_no_SIGSEV)
+{
+	t_stacks	stacks;
+
+	stacks.stack_a = (t_list *)malloc(sizeof(t_list));
+	stacks.stack_b = NULL;
+
+	stacks.stack_a->content = malloc(sizeof(int));
+	stacks.stack_a->next = NULL;
+	*(int *)(stacks.stack_a->content) = 1;
+
+	mu_check(_error(&stacks) == 1);
+}
+
+
+MU_TEST(test__error_receive_stack_a_not_NULL_and_stack_b_not_NULL_expected_no_memory_leak_and_no_SIGSEV)
+{
+	t_stacks	stacks;
+
+	stacks.stack_a = (t_list *)malloc(sizeof(t_list));
+	stacks.stack_b = (t_list *)malloc(sizeof(t_list));
+
+	stacks.stack_a->content = malloc(sizeof(int));
+	stacks.stack_b->content = malloc(sizeof(int));
+	stacks.stack_a->next = NULL;
+	stacks.stack_b->next = NULL;
+	*(int *)(stacks.stack_a->content) = 1;
+	*(int *)(stacks.stack_b->content) = 2;
+
+	mu_check(_error(&stacks) == 1);
+}
+
+
 MU_TEST_SUITE(test_suite_swap)
 {
 	MU_RUN_TEST(test_swap_two_integers);
@@ -1195,6 +1235,12 @@ MU_TEST_SUITE(test_suite_make_lst_with_ints)
 }
 
 
+MU_TEST_SUITE(test_suite_error)
+{
+	MU_RUN_TEST(test_error_receive_NULL_expected_1);
+	MU_RUN_TEST(test_error_receive_stack_a_not_NULL_and_stack_b_NULL_expected_no_memory_leak_and_no_SIGSEV);
+	MU_RUN_TEST(test__error_receive_stack_a_not_NULL_and_stack_b_not_NULL_expected_no_memory_leak_and_no_SIGSEV);
+}
 
 
 int	main(int argc, char *argv[])
@@ -1207,6 +1253,7 @@ int	main(int argc, char *argv[])
 	MU_RUN_SUITE(test_suite_check_repeated);
 	MU_RUN_SUITE(test_suite_make_lst_with_ints);
 	MU_RUN_SUITE(test_suite_check_greater_than_max_or_less_than_min_int);
+	MU_RUN_SUITE(test_suite_error);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

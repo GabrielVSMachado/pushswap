@@ -1466,6 +1466,169 @@ MU_TEST(test_quick_sort_twelve_numbers_random_order_expected_increasing_order)
 	free(num);
 }
 
+/* TESTS TO FUNCTION TO MAKE INTS ARRAYS */
+MU_TEST(test_make_a_array_with_three_numbers_expected_array_ints)
+{
+	int		**num;
+	char	**argv;
+
+	argv = (char **)calloc(sizeof(char *), 4);
+	argv[0] = ft_strdup("push");
+	argv[1] = ft_strdup("1");
+	argv[2] = ft_strdup("2");
+	argv[3] = ft_strdup("3");
+
+	num = make_ints_array(4, argv);
+
+	mu_assert_int_eq(1, *num[0]);
+	mu_assert_int_eq(2, *num[1]);
+	mu_assert_int_eq(3, *num[2]);
+
+	free(argv[0]);
+	free(argv[1]);
+	free(argv[2]);
+	free(argv[3]);
+	free(argv);
+	free(num[2]);
+	free(num[1]);
+	free(num[0]);
+	free(num);
+}
+
+
+MU_TEST(test_make_a_array_with_eleven_numbers_expected_array_ints)
+{
+	int		**num;
+	char	**argv;
+
+	argv = (char **)calloc(sizeof(char *), 11);
+	argv[0] = ft_strdup("push");
+	argv[1] = ft_strdup("1");
+	argv[2] = ft_strdup("2");
+	argv[3] = ft_strdup("3");
+	argv[4] = ft_strdup("4");
+	argv[5] = ft_strdup("5");
+	argv[6] = ft_strdup("6");
+	argv[7] = ft_strdup("7");
+	argv[8] = ft_strdup("8");
+	argv[9] = ft_strdup("9");
+	argv[10] = ft_strdup("10");
+
+	num = make_ints_array(11, argv);
+
+	mu_assert_int_eq(1, *num[0]);
+	mu_assert_int_eq(2, *num[1]);
+	mu_assert_int_eq(3, *num[2]);
+	mu_assert_int_eq(4, *num[3]);
+	mu_assert_int_eq(5, *num[4]);
+	mu_assert_int_eq(6, *num[5]);
+	mu_assert_int_eq(7, *num[6]);
+	mu_assert_int_eq(8, *num[7]);
+	mu_assert_int_eq(9, *num[8]);
+	mu_assert_int_eq(10, *num[9]);
+
+	free(argv[0]);
+	free(argv[1]);
+	free(argv[2]);
+	free(argv[3]);
+	free(argv[4]);
+	free(argv[5]);
+	free(argv[6]);
+	free(argv[7]);
+	free(argv[8]);
+	free(argv[9]);
+	free(argv[10]);
+	free(argv);
+	free(num[9]);
+	free(num[8]);
+	free(num[7]);
+	free(num[6]);
+	free(num[5]);
+	free(num[4]);
+	free(num[3]);
+	free(num[2]);
+	free(num[1]);
+	free(num[0]);
+	free(num);
+}
+
+/* TEST FOR FUNCTION CHUNK_LENGHT */
+MU_TEST(test_array_with_seven_elements_expected_three)
+{
+	int	**num;
+
+	num = (int **)calloc(sizeof(int *), 7);
+	num[0] = (int *)calloc(sizeof(int), 1);
+	num[1] = (int *)calloc(sizeof(int), 1);
+	num[2] = (int *)calloc(sizeof(int), 1);
+	num[3] = (int *)calloc(sizeof(int), 1);
+	num[4] = (int *)calloc(sizeof(int), 1);
+	num[5] = (int *)calloc(sizeof(int), 1);
+	num[6] = (int *)calloc(sizeof(int), 1);
+
+	*num[0] = 1;
+	*num[1] = 2;
+	*num[2] = 3;
+	*num[3] = 4;
+	*num[4] = 5;
+	*num[5] = 6;
+	*num[6] = 7;
+
+	mu_assert_int_eq(3, chunk_lenght(4, num));
+
+	free(num[6]);
+	free(num[5]);
+	free(num[4]);
+	free(num[3]);
+	free(num[2]);
+	free(num[1]);
+	free(num[0]);
+	free(num);
+}
+
+
+MU_TEST(test_execute_the_function_twice_first_expected_3_second_2)
+{
+	int	**num;
+	int	**tmp;
+	int	len;
+
+	num = (int **)calloc(sizeof(int *), 7);
+	num[0] = (int *)calloc(sizeof(int), 1);
+	num[1] = (int *)calloc(sizeof(int), 1);
+	num[2] = (int *)calloc(sizeof(int), 1);
+	num[3] = (int *)calloc(sizeof(int), 1);
+	num[4] = (int *)calloc(sizeof(int), 1);
+	num[5] = (int *)calloc(sizeof(int), 1);
+	num[6] = (int *)calloc(sizeof(int), 1);
+
+	*num[0] = 1;
+	*num[1] = 2;
+	*num[2] = 3;
+	*num[3] = 4;
+	*num[4] = 5;
+	*num[5] = 6;
+	*num[6] = 7;
+
+	len = chunk_lenght(4, num);
+	mu_assert_int_eq(3, len);
+
+	free(num[2]);
+	free(num[1]);
+	free(num[0]);
+	tmp = num;
+	num += len;
+
+	len = chunk_lenght(6, num);
+	mu_assert_int_eq(2, len);
+
+	free(num[0]);
+	free(num[1]);
+	free(num[2]);
+	free(num[3]);
+	free(tmp);
+}
+
 
 MU_TEST_SUITE(suite_swap)
 {
@@ -1587,6 +1750,17 @@ MU_TEST_SUITE(suite_quick_sort)
 	MU_RUN_TEST(test_quick_sort_twelve_numbers_random_order_expected_increasing_order);
 }
 
+MU_TEST_SUITE(suite_make_int_array)
+{
+	MU_RUN_TEST(test_make_a_array_with_three_numbers_expected_array_ints);
+	MU_RUN_TEST(test_make_a_array_with_eleven_numbers_expected_array_ints);
+}
+
+MU_TEST_SUITE(suite_chunk_lenght)
+{
+	MU_RUN_TEST(test_array_with_seven_elements_expected_three);
+	MU_RUN_TEST(test_execute_the_function_twice_first_expected_3_second_2);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -1603,6 +1777,8 @@ int	main(int argc, char *argv[])
 	MU_RUN_SUITE(suite_less_than_mid_point);
 	/* MU_RUN_SUITE(suite_do_operation); */
 	MU_RUN_SUITE(suite_quick_sort);
+	MU_RUN_SUITE(suite_make_int_array);
+	MU_RUN_SUITE(suite_chunk_lenght);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

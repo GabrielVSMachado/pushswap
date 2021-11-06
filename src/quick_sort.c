@@ -12,6 +12,22 @@
 
 #include "push_swap.h"
 
+int	**make_ints_array(int argc, char **argv)
+{
+	int	**num;
+	int	counter;
+
+	num = (int **)malloc(sizeof(int *) * --argc);
+	counter = 0;
+	while (counter < argc)
+	{
+		num[counter] = (int *)malloc(sizeof(int));
+		*num[counter] = ft_atoi(argv[counter + 1]);
+		counter++;
+	}
+	return (num);
+}
+
 static void	swap_q(int **a, int **b)
 {
 	int	tmp;

@@ -23,7 +23,7 @@ SRC_TEST := $(TEST_DIR)/tests.c
 OBJ_TEST := $(SRC_TEST:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # MANDATORY PART
-FILES_UTILS := moviment_functions.c utils_check_parser.c error.c sorting_algorithm.c quick_sort.c
+FILES_UTILS := moviment_functions.c utils_check_parser.c error.c sorting_algorithm.c quick_sort.c init_sorting.c
 FILES := main.c $(FILES_UTILS)
 
 SRC := $(addprefix $(SRC_DIR)/,$(FILES))
@@ -33,7 +33,11 @@ SRC_UTILS := $(addprefix $(SRC_DIR)/,$(FILES_UTILS))
 OBJ_UTILS := $(SRC_UTILS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 #BONUS PART
+UTILS_BONUS := moviment_functions.c utils_check_parser.c error.c
 FILES_BONUS := checker.c get_next_line.c get_next_line_utils.c
+
+SRC_UTILS_BONUS := $(addprefix $(SRC_DIR)/,$(UTILS_BONUS))
+OBJ_UTILS_BONUS := $(SRC_UTILS_BONUS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 SRC_BONUS := $(addprefix $(BONUS_DIR)/,$(FILES_BONUS))
 OBJ_BONUS := $(SRC_BONUS:$(BONUS_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -70,8 +74,8 @@ fclean: clean
 
 re: fclean all
 
-bonus:  $(LIBFT) $(OBJ_BONUS) $(OBJ_UTILS)
-	$(CC) $(CFLAGS) $(OBJ_BONUS) $(OBJ_UTILS) $(HEADERS) -o $(BONUS) $(LIBRARY)
+bonus:  $(LIBFT) $(OBJ_BONUS) $(OBJ_UTILS_BONUS)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) $(OBJ_UTILS_BONUS) $(HEADERS) -o $(BONUS) $(LIBRARY)
 
 
 test: $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)

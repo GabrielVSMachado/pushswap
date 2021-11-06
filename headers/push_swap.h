@@ -42,4 +42,14 @@ t_list	*make_llst_of_ints(int size, char **numbers_as_strings);
 /* FUNCTION TO HANDLE ERRORS */
 int		_error(t_stacks *stacks);
 void	clear_stacks(t_stacks *stacks);
+
+/* HELPERS FUNCTIONS TO SORTING ALGORITHM */
+int		check_chunck_sorted(t_list *lst, int lenght);
+int		less_than_mid_point(t_list *lst, int mid_point, int *less_than_index);
+void	do_operation(int (*op)(), t_list **lst, char *name_op);
+void	partition(t_list **stack_from, t_list **stack_to, char **names_op,
+			int mid_point);
+
+/* FUNCTION QUICK_SORT*/
+void	quick_sort(int	**array, int beginning, int end);
 #endif

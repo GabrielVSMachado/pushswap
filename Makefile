@@ -23,7 +23,7 @@ SRC_TEST := $(TEST_DIR)/tests.c
 OBJ_TEST := $(SRC_TEST:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # MANDATORY PART
-FILES_UTILS := moviment_functions.c utils_check_parser.c error.c
+FILES_UTILS := moviment_functions.c utils_check_parser.c error.c sorting_algorithm.c quick_sort.c
 FILES := main.c $(FILES_UTILS)
 
 SRC := $(addprefix $(SRC_DIR)/,$(FILES))
@@ -75,6 +75,6 @@ bonus:  $(LIBFT) $(OBJ_BONUS) $(OBJ_UTILS)
 
 
 test: $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
-	$(CC) -fsanitize=address $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY)
+	$(CC) $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY) -lrt -lm
 
 .PHONY: all clean fclean re

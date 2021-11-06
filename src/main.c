@@ -14,8 +14,17 @@
 
 int	main(int argc, char *argv[])
 {
-	if (argc != 2)
-		exit(EXIT_FAILURE);
-	write(1, argv[1], ft_strlen(argv[1]));
+	if (argc < 2)
+	{
+		write(2, "Error\n", 6);
+		exit(_error(NULL));
+	}
+	if (check_isdigit(argc, argv) || check_repeated(argc, argv)
+		|| check_greater_than_max_or_less_than_min_int(argc, argv))
+	{
+		write(2, "Error\n", 6);
+		exit(_error(NULL));
+	}
+	init_sorting(argc, argv);
 	return (EXIT_SUCCESS);
 }

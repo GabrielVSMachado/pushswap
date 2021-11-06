@@ -52,4 +52,10 @@ void	partition(t_list **stack_from, t_list **stack_to, char **names_op,
 
 /* FUNCTION QUICK_SORT*/
 void	quick_sort(int	**array, int beginning, int end);
+
+int		**make_ints_array(int argc, char **argv);
+
+/* FUNCTIONS TO MAKE THE SORT */
+void	init_sorting(int argc, char **argv);
+int		chunk_lenght(int mid_point, int **array);
 #endif

@@ -1,5 +1,7 @@
 #include "minunit.h"
 #include "push_swap.h"
+#define TRUE 1
+#define FALSE 0
 
 /* TEST FUNCTION SWAP */
 
@@ -1150,8 +1152,322 @@ MU_TEST(test__error_receive_stack_a_not_NULL_and_stack_b_not_NULL_expected_no_me
 	mu_check(_error(&stacks) == 1);
 }
 
+/* TEST FUNCTION CHECK_SORTED */
 
-MU_TEST_SUITE(test_suite_swap)
+MU_TEST(test_check_sorted_with_unsorted_lst_with_three_elements)
+{
+	t_list	*head;
+	int		n_arr[3] = {1, 2, 3};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->next = (t_list *)calloc(sizeof(t_list), 1);
+	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = n_arr + 2;
+	head->next->content = n_arr;
+	head->next->next->content = n_arr + 1;
+
+	mu_check(check_chunck_sorted(head, 3) == 1);
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+
+MU_TEST(test_check_sorted_with_sorted_lst_with_three_elements)
+{
+	t_list	*head;
+	int		n_arr[3] = {1, 2, 3};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->next = (t_list *)calloc(sizeof(t_list), 1);
+	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = n_arr + 2;
+	head->next->content = n_arr + 1;
+	head->next->next->content = n_arr;
+
+	mu_check(check_chunck_sorted(head, 3) == 0);
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+
+MU_TEST(test_check_chunk_sorted_with_one_element)
+{
+	t_list	*head;
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->content = malloc(sizeof(int));
+	*(int *)head->content = 5;
+
+	mu_check(check_chunck_sorted(head, 1) == 0);
+
+	free(head->content);
+	free(head);
+}
+
+
+/* TEST FUNCTION LESS_THAN_MID_POINT */
+MU_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true)
+{
+	t_list	*head;
+	int		index;
+	int		nums[] = {1, 2};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->next = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = nums;
+	head->next->content = nums + 1;
+
+	mu_check(less_than_mid_point(head, 2, &index) == TRUE);
+	mu_assert_int_eq(0, index);
+
+	free(head->next);
+	free(head);
+}
+
+MU_TEST(test_with_one_number_expected_false)
+{
+	t_list	*head;
+	int		index;
+	int		nums[] = {1};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = nums;
+
+	mu_check(less_than_mid_point(head, 1, &index) == FALSE);
+	mu_assert_int_eq(0, index);
+
+	free(head);
+}
+
+MU_TEST(test_with_three_numbers_none_are_less_than_mid_point)
+{
+	t_list	*head;
+	int		index;
+	int		num[] = {3, 2, 4};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->next = (t_list *)calloc(sizeof(t_list), 1);
+	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = num;
+	head->next->content = num + 1;
+	head->next->next->content = num + 2;
+
+	mu_check(less_than_mid_point(head, 2, &index) == FALSE);
+	mu_assert_int_eq(2, index);
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+
+/* TESTS FOR FUNCTION do_operation*/
+MU_TEST(test_operation_swap_sa)
+{
+	t_list	*head;
+	int		num[] = {1, 2};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->next = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = num;
+	head->next->content = num + 1;
+
+	do_operation(swap, &head, "sa");
+
+	mu_assert_int_eq(2, *(int *)head->content);
+	mu_assert_int_eq(1, *(int *)head->next->content);
+
+	free(head->next);
+	free(head);
+}
+
+
+MU_TEST(test_operation_rotate_to_up_ra)
+{
+	t_list	*head;
+	int		num[] = {1, 2, 3};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->next = (t_list *)calloc(sizeof(t_list), 1);
+	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = num;
+	head->next->content = num + 1;
+	head->next->next->content = num + 2;
+
+	do_operation(rotate_to_up, &head, "ra");
+
+	mu_assert_int_eq(2, *(int *)head->content);
+	mu_assert_int_eq(3, *(int *)head->next->content);
+	mu_assert_int_eq(1, *(int *)head->next->next->content);
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+
+MU_TEST(test_operation_rotate_to_down_ra)
+{
+	t_list	*head;
+	int		num[] = {1, 2, 3};
+
+	head = (t_list *)calloc(sizeof(t_list), 1);
+	head->next = (t_list *)calloc(sizeof(t_list), 1);
+	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
+
+	head->content = num;
+	head->next->content = num + 1;
+	head->next->next->content = num + 2;
+
+	do_operation(rotate_to_down, &head, "rra");
+
+	mu_assert_int_eq(3, *(int *)head->content);
+	mu_assert_int_eq(1, *(int *)head->next->content);
+	mu_assert_int_eq(2, *(int *)head->next->next->content);
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+
+/* TEST FUNCTION QUICK_SORT */
+MU_TEST(test_quick_sort_twelve_numbers_decreasing_order_expected_increasing_order)
+{
+	int	**num;
+
+	num = (int **)calloc(sizeof(int *), 12);
+	num[0] = (int *)calloc(sizeof(int), 1);
+	num[1] = (int *)calloc(sizeof(int), 1);
+	num[2] = (int *)calloc(sizeof(int), 1);
+	num[3] = (int *)calloc(sizeof(int), 1);
+	num[4] = (int *)calloc(sizeof(int), 1);
+	num[5] = (int *)calloc(sizeof(int), 1);
+	num[6] = (int *)calloc(sizeof(int), 1);
+	num[7] = (int *)calloc(sizeof(int), 1);
+	num[8] = (int *)calloc(sizeof(int), 1);
+	num[9] = (int *)calloc(sizeof(int), 1);
+	num[10] = (int *)calloc(sizeof(int), 1);
+	num[11] = (int *)calloc(sizeof(int), 1);
+
+	*num[0] = 12;
+	*num[1] = 11;
+	*num[2] = 10;
+	*num[3] = 9;
+	*num[4] = 8;
+	*num[5] = 7;
+	*num[6] = 6;
+	*num[7] = 5;
+	*num[8] = 4;
+	*num[9] = 3;
+	*num[10] = 2;
+	*num[11] = 1;
+
+	quick_sort(num, 0, 11);
+
+	mu_assert_int_eq(1, *num[0]);
+	mu_assert_int_eq(2, *num[1]);
+	mu_assert_int_eq(3, *num[2]);
+	mu_assert_int_eq(4, *num[3]);
+	mu_assert_int_eq(5, *num[4]);
+	mu_assert_int_eq(6, *num[5]);
+	mu_assert_int_eq(7, *num[6]);
+	mu_assert_int_eq(8, *num[7]);
+	mu_assert_int_eq(9, *num[8]);
+	mu_assert_int_eq(10,*num[9]);
+	mu_assert_int_eq(11,*num[10]);
+	mu_assert_int_eq(12,*num[11]);
+
+	free(num[11]);
+	free(num[10]);
+	free(num[9]);
+	free(num[8]);
+	free(num[7]);
+	free(num[6]);
+	free(num[5]);
+	free(num[4]);
+	free(num[3]);
+	free(num[2]);
+	free(num[1]);
+	free(num[0]);
+	free(num);
+}
+
+
+MU_TEST(test_quick_sort_twelve_numbers_random_order_expected_increasing_order)
+{
+	int	**num;
+
+	num = (int **)calloc(sizeof(int *), 12);
+	num[0] = (int *)calloc(sizeof(int), 1);
+	num[1] = (int *)calloc(sizeof(int), 1);
+	num[2] = (int *)calloc(sizeof(int), 1);
+	num[3] = (int *)calloc(sizeof(int), 1);
+	num[4] = (int *)calloc(sizeof(int), 1);
+	num[5] = (int *)calloc(sizeof(int), 1);
+	num[6] = (int *)calloc(sizeof(int), 1);
+	num[7] = (int *)calloc(sizeof(int), 1);
+	num[8] = (int *)calloc(sizeof(int), 1);
+	num[9] = (int *)calloc(sizeof(int), 1);
+	num[10] = (int *)calloc(sizeof(int), 1);
+	num[11] = (int *)calloc(sizeof(int), 1);
+
+	*num[0] = 8;
+	*num[1] = 10;
+	*num[2] = 11;
+	*num[3] = 9;
+	*num[4] = 7;
+	*num[5] = 3;
+	*num[6] = 6;
+	*num[7] = 5;
+	*num[8] = 4;
+	*num[9] = 1;
+	*num[10] = 2;
+	*num[11] = -1;
+
+	quick_sort(num, 0, 11);
+
+	mu_assert_int_eq(-1, *num[0]);
+	mu_assert_int_eq(1, *num[1]);
+	mu_assert_int_eq(2, *num[2]);
+	mu_assert_int_eq(3, *num[3]);
+	mu_assert_int_eq(4, *num[4]);
+	mu_assert_int_eq(5, *num[5]);
+	mu_assert_int_eq(6, *num[6]);
+	mu_assert_int_eq(7, *num[7]);
+	mu_assert_int_eq(8, *num[8]);
+	mu_assert_int_eq(9,*num[9]);
+	mu_assert_int_eq(10,*num[10]);
+	mu_assert_int_eq(11,*num[11]);
+
+	free(num[11]);
+	free(num[10]);
+	free(num[9]);
+	free(num[8]);
+	free(num[7]);
+	free(num[6]);
+	free(num[5]);
+	free(num[4]);
+	free(num[3]);
+	free(num[2]);
+	free(num[1]);
+	free(num[0]);
+	free(num);
+}
+
+
+MU_TEST_SUITE(suite_swap)
 {
 	MU_RUN_TEST(test_swap_two_integers);
 	MU_RUN_TEST(test_swap_with_one_number_and_second_null);
@@ -1160,7 +1476,7 @@ MU_TEST_SUITE(test_suite_swap)
 }
 
 
-MU_TEST_SUITE(test_suite_push)
+MU_TEST_SUITE(suite_push)
 {
 	MU_RUN_TEST(test_push_one_number_from_a_to_b);
 	MU_RUN_TEST(test_push_two_number_from_a_to_b);
@@ -1172,7 +1488,7 @@ MU_TEST_SUITE(test_suite_push)
 }
 
 
-MU_TEST_SUITE(test_suite_rotate_up)
+MU_TEST_SUITE(suite_rotate_up)
 {
 	MU_RUN_TEST(test_rotate_up_the_list_the_first_become_the_last_and_vice_versa);
 	MU_RUN_TEST(test_rotate_up_three_numbers);
@@ -1183,7 +1499,7 @@ MU_TEST_SUITE(test_suite_rotate_up)
 }
 
 
-MU_TEST_SUITE(test_suite_rotate_down)
+MU_TEST_SUITE(suite_rotate_down)
 {
 	MU_RUN_TEST(test_rotate_down_two_numbers);
 	MU_RUN_TEST(test_rotate_down_three_numbers);
@@ -1194,7 +1510,7 @@ MU_TEST_SUITE(test_suite_rotate_down)
 }
 
 
-MU_TEST_SUITE(test_suite_check_inputs)
+MU_TEST_SUITE(suite_check_inputs)
 {
 	MU_RUN_TEST(test_check_isdigit_three_inputs_with_the_seconds_with_one_letter_btween_digits);
 	MU_RUN_TEST(test_check_isdigit_three_arguments_with_spaces);
@@ -1210,7 +1526,7 @@ MU_TEST_SUITE(test_suite_check_inputs)
 	MU_RUN_TEST(test_check_isdigit_with_letters_and_symbols);
 }
 
-MU_TEST_SUITE(test_suite_check_greater_than_max_or_less_than_min_int)
+MU_TEST_SUITE(suite_check_greater_than_max_or_less_than_min_int)
 {
 	MU_RUN_TEST(test_input_digit_greater_than_int_max_and_expected_1);
 	MU_RUN_TEST(test_digit_is_equal_int_max_and_expected_0);
@@ -1219,7 +1535,7 @@ MU_TEST_SUITE(test_suite_check_greater_than_max_or_less_than_min_int)
 }
 
 
-MU_TEST_SUITE(test_suite_check_repeated)
+MU_TEST_SUITE(suite_check_repeated)
 {
 	MU_RUN_TEST(test_check_repeated_two_number_one);
 	MU_RUN_TEST(test_check_repeated_no_repeated_numbers);
@@ -1228,32 +1544,65 @@ MU_TEST_SUITE(test_suite_check_repeated)
 }
 
 
-MU_TEST_SUITE(test_suite_make_lst_with_ints)
+MU_TEST_SUITE(suite_make_lst_with_ints)
 {
 	MU_RUN_TEST(test_input_two_strings_of_numbers_and_expected_a_llst_with_two_ints);
 	MU_RUN_TEST(test_input_three_strings_of_numbers_and_expected_a_llst_with_three_ints);
 }
 
 
-MU_TEST_SUITE(test_suite_error)
+MU_TEST_SUITE(suite_error)
 {
 	MU_RUN_TEST(test_error_receive_NULL_expected_1);
 	MU_RUN_TEST(test_error_receive_stack_a_not_NULL_and_stack_b_NULL_expected_no_memory_leak_and_no_SIGSEV);
 	MU_RUN_TEST(test__error_receive_stack_a_not_NULL_and_stack_b_not_NULL_expected_no_memory_leak_and_no_SIGSEV);
 }
 
+MU_TEST_SUITE(suite_check_sorted)
+{
+	MU_RUN_TEST(test_check_sorted_with_unsorted_lst_with_three_elements);
+	MU_RUN_TEST(test_check_sorted_with_sorted_lst_with_three_elements);
+	MU_RUN_TEST(test_check_chunk_sorted_with_one_element);
+}
+
+
+MU_TEST_SUITE(suite_less_than_mid_point)
+{
+	MU_RUN_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true);
+	MU_RUN_TEST(test_with_one_number_expected_false);
+	MU_RUN_TEST(test_with_three_numbers_none_are_less_than_mid_point);
+}
+
+
+MU_TEST_SUITE(suite_do_operation)
+{
+	MU_RUN_TEST(test_operation_swap_sa);
+	MU_RUN_TEST(test_operation_rotate_to_up_ra);
+	MU_RUN_TEST(test_operation_rotate_to_down_ra);
+}
+
+MU_TEST_SUITE(suite_quick_sort)
+{
+	MU_RUN_TEST(test_quick_sort_twelve_numbers_decreasing_order_expected_increasing_order);
+	MU_RUN_TEST(test_quick_sort_twelve_numbers_random_order_expected_increasing_order);
+}
+
 
 int	main(int argc, char *argv[])
 {
-	MU_RUN_SUITE(test_suite_swap);
-	MU_RUN_SUITE(test_suite_push);
-	MU_RUN_SUITE(test_suite_rotate_up);
-	MU_RUN_SUITE(test_suite_rotate_down);
-	MU_RUN_SUITE(test_suite_check_inputs);
-	MU_RUN_SUITE(test_suite_check_repeated);
-	MU_RUN_SUITE(test_suite_make_lst_with_ints);
-	MU_RUN_SUITE(test_suite_check_greater_than_max_or_less_than_min_int);
-	MU_RUN_SUITE(test_suite_error);
+	MU_RUN_SUITE(suite_swap);
+	MU_RUN_SUITE(suite_push);
+	MU_RUN_SUITE(suite_rotate_up);
+	MU_RUN_SUITE(suite_rotate_down);
+	MU_RUN_SUITE(suite_check_inputs);
+	MU_RUN_SUITE(suite_check_repeated);
+	MU_RUN_SUITE(suite_make_lst_with_ints);
+	MU_RUN_SUITE(suite_check_greater_than_max_or_less_than_min_int);
+	MU_RUN_SUITE(suite_error);
+	MU_RUN_SUITE(suite_check_sorted);
+	MU_RUN_SUITE(suite_less_than_mid_point);
+	/* MU_RUN_SUITE(suite_do_operation); */
+	MU_RUN_SUITE(suite_quick_sort);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

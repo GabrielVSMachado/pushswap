@@ -39,7 +39,7 @@ int		check_greater_than_max_or_less_than_min_int(int argc, char **argv);
 /* FUNCTIONS TO MAKE A LINKED LIST WITH THE INPUTS */
 t_list	*make_llst_of_ints(int size, char **numbers_as_strings);
 
-/* FUNCTION TO HANDLE ERRORS */
+/* FUNCTION TO HANDLE ERRORS OR CLEAR POINTERS*/
 int		_error(t_stacks *stacks);
 void	clear_stacks(t_stacks *stacks);
 
@@ -48,15 +48,16 @@ int		check_chunck_sorted_in_b(t_list *lst, int lenght);
 int		less_than_mid_point(t_list *lst, int mid_point, int *less_than_index);
 void	do_operation(int (*op)(), t_list **lst, const char *name_op);
 void	partition(t_list **stack_from, t_list **stack_to, int mid_point);
-int		chunk_lenght(int mid_point, int **array);
+int		chunk_lenght(int mid_point, int *array);
 
 /* FUNCTION TO EXECUTE SORTING */
 void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array);
 
 /* FUNCTIONS QUICK_SORT*/
-void	quick_sort(int	**array, int beginning, int end);
-int		**make_ints_array(int argc, char **argv);
+void	quick_sort(int	*array, int beginning, int end);
+int		*make_ints_array(int argc, char **argv);
 
 /* FUNCTIONS TO SETUP THE SORT */
 void	setup_sorting(int argc, char **argv);
+int		*make_ints_array_from_llst(t_stacks **stacks, int len_chunck);
 #endif

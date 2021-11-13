@@ -15,20 +15,12 @@
 void	setup_sorting(int argc, char **argv)
 {
 	t_stacks	stacks;
-	int			**ord_array;
-	int			size;
+	int			*ord_array;
 
 	ft_bzero(&stacks, sizeof(t_stacks));
 	stacks.stack_a = make_llst_of_ints(argc, argv);
 	ord_array = make_ints_array(argc, argv);
 	quick_sort(ord_array, 0, argc - 2);
-	sorting(ord_array, &stacks, argc - 1);
+	sorting(&ord_array, &stacks, argc - 1);
 	clear_stacks(&stacks);
-	size = argc - 2;
-	while (size >= 0)
-	{
-		free(ord_array[size]);
-		size--;
-	}
-	free(ord_array);
 }

@@ -12,12 +12,12 @@
 
 #include "push_swap.h"
 
-int	chunk_lenght(int mid_point, int **array)
+int	chunk_lenght(int mid_point, int *array)
 {
 	int	lenght;
 
 	lenght = 0;
-	while (*array[lenght] != mid_point)
+	while (array[lenght] != mid_point)
 		lenght++;
 	return (lenght);
 }

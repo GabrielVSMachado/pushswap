@@ -12,33 +12,32 @@
 
 #include "push_swap.h"
 
-int	**make_ints_array(int argc, char **argv)
+int	*make_ints_array(int argc, char **argv)
 {
-	int	**num;
+	int	*num;
 	int	counter;
 
-	num = (int **)malloc(sizeof(int *) * --argc);
+	num = (int *)malloc(sizeof(int) * --argc);
 	ft_bzero(num, sizeof(num));
 	counter = 0;
 	while (counter < argc)
 	{
-		num[counter] = (int *)malloc(sizeof(int));
-		*num[counter] = ft_atoi(argv[counter + 1]);
+		num[counter] = ft_atoi(argv[counter + 1]);
 		counter++;
 	}
 	return (num);
 }
 
-static void	swap_q(int **a, int **b)
+static void	swap_q(int *a, int *b)
 {
 	int	tmp;
 
-	tmp = **a;
-	**a = **b;
-	**b = tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
-static int	paritition_quick(int **array, int beginning, int end)
+static int	paritition_quick(int *array, int beginning, int end)
 {
 	int	pivot;
 	int	counter_i;
@@ -46,10 +45,10 @@ static int	paritition_quick(int **array, int beginning, int end)
 
 	counter_i = beginning;
 	counter_j = beginning;
-	pivot = *array[end];
+	pivot = array[end];
 	while (counter_j < end)
 	{
-		if (*array[counter_j] < pivot)
+		if ((array)[counter_j] < pivot)
 		{
 			swap_q(&array[counter_j], &array[counter_i]);
 			counter_i++;
@@ -60,7 +59,7 @@ static int	paritition_quick(int **array, int beginning, int end)
 	return (counter_i);
 }
 
-void	quick_sort(int	**array, int beginning, int end)
+void	quick_sort(int	*array, int beginning, int end)
 {
 	int	mid_point;
 

@@ -34,7 +34,7 @@ SRC_UTILS := $(addprefix $(SRC_DIR)/,$(FILES_UTILS))
 OBJ_UTILS := $(SRC_UTILS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 #BONUS PART
-UTILS_BONUS := moviment_functions.c utils_check_parser.c error.c
+UTILS_BONUS := moviment_functions.c utils_check_parser.c utils.c
 FILES_BONUS := checker.c get_next_line.c get_next_line_utils.c
 
 SRC_UTILS_BONUS := $(addprefix $(SRC_DIR)/,$(UTILS_BONUS))

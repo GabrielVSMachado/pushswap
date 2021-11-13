@@ -18,6 +18,7 @@ int	**make_ints_array(int argc, char **argv)
 	int	counter;
 
 	num = (int **)malloc(sizeof(int *) * --argc);
+	ft_bzero(num, sizeof(num));
 	counter = 0;
 	while (counter < argc)
 	{
@@ -39,22 +40,23 @@ static void	swap_q(int **a, int **b)
 
 static int	paritition_quick(int **array, int beginning, int end)
 {
-	int	*pivot;
+	int	pivot;
 	int	counter_i;
 	int	counter_j;
 
 	counter_i = beginning;
 	counter_j = beginning;
-	pivot = array[end];
+	pivot = *array[end];
 	while (counter_j < end)
 	{
-		if (*array[counter_j] < *pivot)
-			counter_i++;
-		if (*array[counter_j] < *array[counter_i])
+		if (*array[counter_j] < pivot)
+		{
 			swap_q(&array[counter_j], &array[counter_i]);
+			counter_i++;
+		}
 		counter_j++;
 	}
-	swap_q(&pivot, &array[counter_i]);
+	swap_q(&array[end], &array[counter_i]);
 	return (counter_i);
 }
 
@@ -65,7 +67,7 @@ void	quick_sort(int	**array, int beginning, int end)
 	if (beginning < end)
 	{
 		mid_point = paritition_quick(array, beginning, end);
-		quick_sort(array, mid_point + 1, end);
 		quick_sort(array, beginning, mid_point - 1);
+		quick_sort(array, mid_point + 1, end);
 	}
 }

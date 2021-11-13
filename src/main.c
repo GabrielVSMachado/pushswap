@@ -25,6 +25,6 @@ int	main(int argc, char *argv[])
 		write(2, "Error\n", 6);
 		exit(_error(NULL));
 	}
-	init_sorting(argc, argv);
+	setup_sorting(argc, argv);
 	return (EXIT_SUCCESS);
 }

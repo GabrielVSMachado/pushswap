@@ -23,7 +23,8 @@ SRC_TEST := $(TEST_DIR)/tests.c
 OBJ_TEST := $(SRC_TEST:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # MANDATORY PART
-FILES_UTILS := moviment_functions.c utils_check_parser.c error.c sorting_algorithm.c quick_sort.c init_sorting.c
+FILES_UTILS := moviment_functions.c utils_check_parser.c utils.c sorting_algorithm_utils.c quick_sort.c\
+			   init_sorting.c sorting_algorithm.c
 FILES := main.c $(FILES_UTILS)
 
 SRC := $(addprefix $(SRC_DIR)/,$(FILES))
@@ -81,4 +82,4 @@ bonus:  $(LIBFT) $(OBJ_BONUS) $(OBJ_UTILS_BONUS)
 test: $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
 	$(CC) $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY) -lrt -lm
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus test

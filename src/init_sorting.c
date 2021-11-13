@@ -12,25 +12,23 @@
 
 #include "push_swap.h"
 
-int	chunk_lenght(int mid_point, int **array)
+void	setup_sorting(int argc, char **argv)
 {
-	int	lenght;
+	t_stacks	stacks;
+	int			**ord_array;
+	int			size;
 
-	lenght = 0;
-	while (*array[lenght] != mid_point)
-		lenght++;
-	return (lenght);
+	ft_bzero(&stacks, sizeof(t_stacks));
+	stacks.stack_a = make_llst_of_ints(argc, argv);
+	ord_array = make_ints_array(argc, argv);
+	quick_sort(ord_array, 0, argc - 2);
+	sorting(ord_array, &stacks, argc - 1);
+	clear_stacks(&stacks);
+	size = argc - 2;
+	while (size >= 0)
+	{
+		free(ord_array[size]);
+		size--;
+	}
+	free(ord_array);
 }
-
-/* void	init_sorting(int argc, char **argv) */
-/* { */
-/* 	t_stacks	stacks; */
-/* 	int			**ord_array; */
-/* 	int			mid_point; */
-
-/* 	ft_bzero(&stacks, sizeof(t_stacks)); */
-/* 	stacks.stack_a = make_llst_of_ints(argc, argv); */
-/* 	ord_array = make_ints_array(argc, argv); */
-/* 	quick_sort(ord_array, 0, (sizeof(ord_array) / 4) - 1); */
-/* 	mid_point = *ord_array[(sizeof(ord_array) / 4) / 2]; */
-/* } */

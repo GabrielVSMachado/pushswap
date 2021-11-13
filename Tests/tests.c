@@ -1167,7 +1167,7 @@ MU_TEST(test_check_sorted_with_unsorted_lst_with_three_elements)
 	head->next->content = n_arr;
 	head->next->next->content = n_arr + 1;
 
-	mu_check(check_chunck_sorted(head, 3) == 1);
+	mu_check(check_chunck_sorted_in_b(head, 3) == 1);
 
 	free(head->next->next);
 	free(head->next);
@@ -1188,7 +1188,7 @@ MU_TEST(test_check_sorted_with_sorted_lst_with_three_elements)
 	head->next->content = n_arr + 1;
 	head->next->next->content = n_arr;
 
-	mu_check(check_chunck_sorted(head, 3) == 0);
+	mu_check(check_chunck_sorted_in_b(head, 3) == 0);
 
 	free(head->next->next);
 	free(head->next);
@@ -1204,7 +1204,7 @@ MU_TEST(test_check_chunk_sorted_with_one_element)
 	head->content = malloc(sizeof(int));
 	*(int *)head->content = 5;
 
-	mu_check(check_chunck_sorted(head, 1) == 0);
+	mu_check(check_chunck_sorted_in_b(head, 1) == 0);
 
 	free(head->content);
 	free(head);
@@ -1618,6 +1618,7 @@ MU_TEST(test_execute_the_function_twice_first_expected_3_second_2)
 	free(num[0]);
 	tmp = num;
 	num += len;
+	free(tmp);
 
 	len = chunk_lenght(6, num);
 	mu_assert_int_eq(2, len);
@@ -1626,9 +1627,56 @@ MU_TEST(test_execute_the_function_twice_first_expected_3_second_2)
 	free(num[1]);
 	free(num[2]);
 	free(num[3]);
-	free(tmp);
 }
 
+/*TEST PARTITION FUNCTION */
+MU_TEST(test_array_with_eight_elements_expected_sending_four_to_the_other_stack)
+{
+	t_list	*head_a;
+	t_list	*head_b;
+	int		num[] = {1, 2, 3, 4, 5, 6, 7, 8};
+
+	head_b = NULL;
+	head_a = (t_list *)calloc(sizeof(t_list), 1);
+	head_a->next = (t_list *)calloc(sizeof(t_list), 1);
+	head_a->next->next = (t_list *)calloc(sizeof(t_list), 1);
+	head_a->next->next->next = (t_list *)calloc(sizeof(t_list), 1);
+	head_a->next->next->next->next = (t_list *)calloc(sizeof(t_list), 1);
+	head_a->next->next->next->next->next = (t_list *)calloc(sizeof(t_list), 1);
+	head_a->next->next->next->next->next->next = (t_list *)calloc(sizeof(t_list), 1);
+	head_a->next->next->next->next->next->next->next = (t_list *)calloc(sizeof(t_list), 1);
+
+
+	head_a->content = num;
+	head_a->next->content = (num + 1);
+	head_a->next->next->content = num + 2;
+	head_a->next->next->next->content = num + 3;
+	head_a->next->next->next->next->content = num + 4;
+	head_a->next->next->next->next->next->content = num + 5;
+	head_a->next->next->next->next->next->next->content = num + 6;
+	head_a->next->next->next->next->next->next->next->content = num + 7;
+
+	partition(&head_a, &head_b, num[4]);
+	partition(&head_a, &head_b, num[6]);
+
+	mu_assert_int_eq(6, *(int *)head_b->content);
+	mu_assert_int_eq(5, *(int *)head_b->next->content);
+	mu_assert_int_eq(4, *(int *)head_b->next->next->content);
+	mu_assert_int_eq(3, *(int *)head_b->next->next->next->content);
+	mu_assert_int_eq(2, *(int *)head_b->next->next->next->next->content);
+	mu_assert_int_eq(1, *(int *)head_b->next->next->next->next->next->content);
+	mu_assert_int_eq(7, *(int *)head_a->content);
+	mu_assert_int_eq(8, *(int *)head_a->next->content);
+
+	free(head_b->next->next->next->next->next);
+	free(head_b->next->next->next->next);
+	free(head_b->next->next->next);
+	free(head_b->next->next);
+	free(head_b->next);
+	free(head_b);
+	free(head_a->next);
+	free(head_a);
+}
 
 MU_TEST_SUITE(suite_swap)
 {
@@ -1762,6 +1810,11 @@ MU_TEST_SUITE(suite_chunk_lenght)
 	MU_RUN_TEST(test_execute_the_function_twice_first_expected_3_second_2);
 }
 
+MU_TEST_SUITE(suite_partition)
+{
+	MU_RUN_TEST(test_array_with_eight_elements_expected_sending_four_to_the_other_stack);
+}
+
 int	main(int argc, char *argv[])
 {
 	MU_RUN_SUITE(suite_swap);
@@ -1779,6 +1832,7 @@ int	main(int argc, char *argv[])
 	MU_RUN_SUITE(suite_quick_sort);
 	MU_RUN_SUITE(suite_make_int_array);
 	MU_RUN_SUITE(suite_chunk_lenght);
+	/* MU_RUN_SUITE(suite_partition); */
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

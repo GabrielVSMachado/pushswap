@@ -44,18 +44,19 @@ int		_error(t_stacks *stacks);
 void	clear_stacks(t_stacks *stacks);
 
 /* HELPERS FUNCTIONS TO SORTING ALGORITHM */
-int		check_chunck_sorted(t_list *lst, int lenght);
+int		check_chunck_sorted_in_b(t_list *lst, int lenght);
 int		less_than_mid_point(t_list *lst, int mid_point, int *less_than_index);
-void	do_operation(int (*op)(), t_list **lst, char *name_op);
-void	partition(t_list **stack_from, t_list **stack_to, char **names_op,
-			int mid_point);
+void	do_operation(int (*op)(), t_list **lst, const char *name_op);
+void	partition(t_list **stack_from, t_list **stack_to, int mid_point);
+int		chunk_lenght(int mid_point, int **array);
 
-/* FUNCTION QUICK_SORT*/
+/* FUNCTION TO EXECUTE SORTING */
+void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array);
+
+/* FUNCTIONS QUICK_SORT*/
 void	quick_sort(int	**array, int beginning, int end);
-
 int		**make_ints_array(int argc, char **argv);
 
-/* FUNCTIONS TO MAKE THE SORT */
-void	init_sorting(int argc, char **argv);
-int		chunk_lenght(int mid_point, int **array);
+/* FUNCTIONS TO SETUP THE SORT */
+void	setup_sorting(int argc, char **argv);
 #endif

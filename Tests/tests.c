@@ -1345,131 +1345,83 @@ MU_TEST(test_operation_rotate_to_down_ra)
 /* TEST FUNCTION QUICK_SORT */
 MU_TEST(test_quick_sort_twelve_numbers_decreasing_order_expected_increasing_order)
 {
-	int	**num;
+	int	*num;
 
-	num = (int **)calloc(sizeof(int *), 12);
-	num[0] = (int *)calloc(sizeof(int), 1);
-	num[1] = (int *)calloc(sizeof(int), 1);
-	num[2] = (int *)calloc(sizeof(int), 1);
-	num[3] = (int *)calloc(sizeof(int), 1);
-	num[4] = (int *)calloc(sizeof(int), 1);
-	num[5] = (int *)calloc(sizeof(int), 1);
-	num[6] = (int *)calloc(sizeof(int), 1);
-	num[7] = (int *)calloc(sizeof(int), 1);
-	num[8] = (int *)calloc(sizeof(int), 1);
-	num[9] = (int *)calloc(sizeof(int), 1);
-	num[10] = (int *)calloc(sizeof(int), 1);
-	num[11] = (int *)calloc(sizeof(int), 1);
+	num = (int *)calloc(sizeof(int), 12);
 
-	*num[0] = 12;
-	*num[1] = 11;
-	*num[2] = 10;
-	*num[3] = 9;
-	*num[4] = 8;
-	*num[5] = 7;
-	*num[6] = 6;
-	*num[7] = 5;
-	*num[8] = 4;
-	*num[9] = 3;
-	*num[10] = 2;
-	*num[11] = 1;
+	num[0] = 12;
+	num[1] = 11;
+	num[2] = 10;
+	num[3] = 9;
+	num[4] = 8;
+	num[5] = 7;
+	num[6] = 6;
+	num[7] = 5;
+	num[8] = 4;
+	num[9] = 3;
+	num[10] = 2;
+	num[11] = 1;
 
 	quick_sort(num, 0, 11);
 
-	mu_assert_int_eq(1, *num[0]);
-	mu_assert_int_eq(2, *num[1]);
-	mu_assert_int_eq(3, *num[2]);
-	mu_assert_int_eq(4, *num[3]);
-	mu_assert_int_eq(5, *num[4]);
-	mu_assert_int_eq(6, *num[5]);
-	mu_assert_int_eq(7, *num[6]);
-	mu_assert_int_eq(8, *num[7]);
-	mu_assert_int_eq(9, *num[8]);
-	mu_assert_int_eq(10,*num[9]);
-	mu_assert_int_eq(11,*num[10]);
-	mu_assert_int_eq(12,*num[11]);
+	mu_assert_int_eq(1, num[0]);
+	mu_assert_int_eq(2, num[1]);
+	mu_assert_int_eq(3, num[2]);
+	mu_assert_int_eq(4, num[3]);
+	mu_assert_int_eq(5, num[4]);
+	mu_assert_int_eq(6, num[5]);
+	mu_assert_int_eq(7, num[6]);
+	mu_assert_int_eq(8, num[7]);
+	mu_assert_int_eq(9, num[8]);
+	mu_assert_int_eq(10,num[9]);
+	mu_assert_int_eq(11,num[10]);
+	mu_assert_int_eq(12,num[11]);
 
-	free(num[11]);
-	free(num[10]);
-	free(num[9]);
-	free(num[8]);
-	free(num[7]);
-	free(num[6]);
-	free(num[5]);
-	free(num[4]);
-	free(num[3]);
-	free(num[2]);
-	free(num[1]);
-	free(num[0]);
 	free(num);
 }
 
 
 MU_TEST(test_quick_sort_twelve_numbers_random_order_expected_increasing_order)
 {
-	int	**num;
+	int	*num;
 
-	num = (int **)calloc(sizeof(int *), 12);
-	num[0] = (int *)calloc(sizeof(int), 1);
-	num[1] = (int *)calloc(sizeof(int), 1);
-	num[2] = (int *)calloc(sizeof(int), 1);
-	num[3] = (int *)calloc(sizeof(int), 1);
-	num[4] = (int *)calloc(sizeof(int), 1);
-	num[5] = (int *)calloc(sizeof(int), 1);
-	num[6] = (int *)calloc(sizeof(int), 1);
-	num[7] = (int *)calloc(sizeof(int), 1);
-	num[8] = (int *)calloc(sizeof(int), 1);
-	num[9] = (int *)calloc(sizeof(int), 1);
-	num[10] = (int *)calloc(sizeof(int), 1);
-	num[11] = (int *)calloc(sizeof(int), 1);
+	num = (int *)calloc(sizeof(int *), 12);
 
-	*num[0] = 8;
-	*num[1] = 10;
-	*num[2] = 11;
-	*num[3] = 9;
-	*num[4] = 7;
-	*num[5] = 3;
-	*num[6] = 6;
-	*num[7] = 5;
-	*num[8] = 4;
-	*num[9] = 1;
-	*num[10] = 2;
-	*num[11] = -1;
+	num[0] = 8;
+	num[1] = 10;
+	num[2] = 11;
+	num[3] = 9;
+	num[4] = 7;
+	num[5] = 3;
+	num[6] = 6;
+	num[7] = 5;
+	num[8] = 4;
+	num[9] = 1;
+	num[10] = 2;
+	num[11] = -1;
 
 	quick_sort(num, 0, 11);
 
-	mu_assert_int_eq(-1, *num[0]);
-	mu_assert_int_eq(1, *num[1]);
-	mu_assert_int_eq(2, *num[2]);
-	mu_assert_int_eq(3, *num[3]);
-	mu_assert_int_eq(4, *num[4]);
-	mu_assert_int_eq(5, *num[5]);
-	mu_assert_int_eq(6, *num[6]);
-	mu_assert_int_eq(7, *num[7]);
-	mu_assert_int_eq(8, *num[8]);
-	mu_assert_int_eq(9,*num[9]);
-	mu_assert_int_eq(10,*num[10]);
-	mu_assert_int_eq(11,*num[11]);
+	mu_assert_int_eq(-1, num[0]);
+	mu_assert_int_eq(1, num[1]);
+	mu_assert_int_eq(2, num[2]);
+	mu_assert_int_eq(3, num[3]);
+	mu_assert_int_eq(4, num[4]);
+	mu_assert_int_eq(5, num[5]);
+	mu_assert_int_eq(6, num[6]);
+	mu_assert_int_eq(7, num[7]);
+	mu_assert_int_eq(8, num[8]);
+	mu_assert_int_eq(9,num[9]);
+	mu_assert_int_eq(10,num[10]);
+	mu_assert_int_eq(11,num[11]);
 
-	free(num[11]);
-	free(num[10]);
-	free(num[9]);
-	free(num[8]);
-	free(num[7]);
-	free(num[6]);
-	free(num[5]);
-	free(num[4]);
-	free(num[3]);
-	free(num[2]);
-	free(num[1]);
-	free(num[0]);
 	free(num);
 }
 
 /* TESTS TO FUNCTION TO MAKE INTS ARRAYS */
 MU_TEST(test_make_a_array_with_three_numbers_expected_array_ints)
 {
-	int		**num;
+	int		*num;
 	char	**argv;
 
 	argv = (char **)calloc(sizeof(char *), 4);
@@ -1480,25 +1432,22 @@ MU_TEST(test_make_a_array_with_three_numbers_expected_array_ints)
 
 	num = make_ints_array(4, argv);
 
-	mu_assert_int_eq(1, *num[0]);
-	mu_assert_int_eq(2, *num[1]);
-	mu_assert_int_eq(3, *num[2]);
+	mu_assert_int_eq(1, num[0]);
+	mu_assert_int_eq(2, num[1]);
+	mu_assert_int_eq(3, num[2]);
 
 	free(argv[0]);
 	free(argv[1]);
 	free(argv[2]);
 	free(argv[3]);
 	free(argv);
-	free(num[2]);
-	free(num[1]);
-	free(num[0]);
 	free(num);
 }
 
 
 MU_TEST(test_make_a_array_with_eleven_numbers_expected_array_ints)
 {
-	int		**num;
+	int		*num;
 	char	**argv;
 
 	argv = (char **)calloc(sizeof(char *), 11);
@@ -1516,16 +1465,16 @@ MU_TEST(test_make_a_array_with_eleven_numbers_expected_array_ints)
 
 	num = make_ints_array(11, argv);
 
-	mu_assert_int_eq(1, *num[0]);
-	mu_assert_int_eq(2, *num[1]);
-	mu_assert_int_eq(3, *num[2]);
-	mu_assert_int_eq(4, *num[3]);
-	mu_assert_int_eq(5, *num[4]);
-	mu_assert_int_eq(6, *num[5]);
-	mu_assert_int_eq(7, *num[6]);
-	mu_assert_int_eq(8, *num[7]);
-	mu_assert_int_eq(9, *num[8]);
-	mu_assert_int_eq(10, *num[9]);
+	mu_assert_int_eq(1, num[0]);
+	mu_assert_int_eq(2, num[1]);
+	mu_assert_int_eq(3, num[2]);
+	mu_assert_int_eq(4, num[3]);
+	mu_assert_int_eq(5, num[4]);
+	mu_assert_int_eq(6, num[5]);
+	mu_assert_int_eq(7, num[6]);
+	mu_assert_int_eq(8, num[7]);
+	mu_assert_int_eq(9, num[8]);
+	mu_assert_int_eq(10, num[9]);
 
 	free(argv[0]);
 	free(argv[1]);
@@ -1539,94 +1488,56 @@ MU_TEST(test_make_a_array_with_eleven_numbers_expected_array_ints)
 	free(argv[9]);
 	free(argv[10]);
 	free(argv);
-	free(num[9]);
-	free(num[8]);
-	free(num[7]);
-	free(num[6]);
-	free(num[5]);
-	free(num[4]);
-	free(num[3]);
-	free(num[2]);
-	free(num[1]);
-	free(num[0]);
 	free(num);
 }
 
 /* TEST FOR FUNCTION CHUNK_LENGHT */
 MU_TEST(test_array_with_seven_elements_expected_three)
 {
-	int	**num;
+	int	*num;
 
-	num = (int **)calloc(sizeof(int *), 7);
-	num[0] = (int *)calloc(sizeof(int), 1);
-	num[1] = (int *)calloc(sizeof(int), 1);
-	num[2] = (int *)calloc(sizeof(int), 1);
-	num[3] = (int *)calloc(sizeof(int), 1);
-	num[4] = (int *)calloc(sizeof(int), 1);
-	num[5] = (int *)calloc(sizeof(int), 1);
-	num[6] = (int *)calloc(sizeof(int), 1);
+	num = (int *)calloc(sizeof(int), 7);
 
-	*num[0] = 1;
-	*num[1] = 2;
-	*num[2] = 3;
-	*num[3] = 4;
-	*num[4] = 5;
-	*num[5] = 6;
-	*num[6] = 7;
+	num[0] = 1;
+	num[1] = 2;
+	num[2] = 3;
+	num[3] = 4;
+	num[4] = 5;
+	num[5] = 6;
+	num[6] = 7;
 
 	mu_assert_int_eq(3, chunk_lenght(4, num));
 
-	free(num[6]);
-	free(num[5]);
-	free(num[4]);
-	free(num[3]);
-	free(num[2]);
-	free(num[1]);
-	free(num[0]);
 	free(num);
 }
 
 
 MU_TEST(test_execute_the_function_twice_first_expected_3_second_2)
 {
-	int	**num;
-	int	**tmp;
+	int	*num;
+	int	*tmp;
 	int	len;
 
-	num = (int **)calloc(sizeof(int *), 7);
-	num[0] = (int *)calloc(sizeof(int), 1);
-	num[1] = (int *)calloc(sizeof(int), 1);
-	num[2] = (int *)calloc(sizeof(int), 1);
-	num[3] = (int *)calloc(sizeof(int), 1);
-	num[4] = (int *)calloc(sizeof(int), 1);
-	num[5] = (int *)calloc(sizeof(int), 1);
-	num[6] = (int *)calloc(sizeof(int), 1);
+	num = (int*)calloc(sizeof(int), 7);
 
-	*num[0] = 1;
-	*num[1] = 2;
-	*num[2] = 3;
-	*num[3] = 4;
-	*num[4] = 5;
-	*num[5] = 6;
-	*num[6] = 7;
+	num[0] = 1;
+	num[1] = 2;
+	num[2] = 3;
+	num[3] = 4;
+	num[4] = 5;
+	num[5] = 6;
+	num[6] = 7;
 
 	len = chunk_lenght(4, num);
 	mu_assert_int_eq(3, len);
 
-	free(num[2]);
-	free(num[1]);
-	free(num[0]);
 	tmp = num;
-	num += len;
-	free(tmp);
+	tmp += len;
 
-	len = chunk_lenght(6, num);
+	len = chunk_lenght(6, tmp);
 	mu_assert_int_eq(2, len);
 
-	free(num[0]);
-	free(num[1]);
-	free(num[2]);
-	free(num[3]);
+	free(num);
 }
 
 /*TEST PARTITION FUNCTION */
@@ -1676,6 +1587,71 @@ MU_TEST(test_array_with_eight_elements_expected_sending_four_to_the_other_stack)
 	free(head_b);
 	free(head_a->next);
 	free(head_a);
+}
+
+/* TEST MAKE ARRAY OF THREE ELEMENTS */
+MU_TEST(test_make_array_of_three_elements)
+{
+	t_stacks	*head;
+	int		*num;
+
+	head = calloc(sizeof(t_stacks), 1);
+	head->stack_b = calloc(sizeof(t_list), 1);
+	head->stack_b->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next = calloc(sizeof(t_list), 1);
+
+	head->stack_b->content = calloc(sizeof(int), 1);
+	head->stack_b->next->content = calloc(sizeof(int), 1);
+	head->stack_b->next->next->content = calloc(sizeof(int), 1);
+
+	*(int *)head->stack_b->content = 5;
+	*(int *)head->stack_b->next->content = 3;
+	*(int *)head->stack_b->next->next->content = 2;
+
+	num = make_ints_array_from_llst(&head, 3);
+
+	mu_assert_int_eq(2, num[0]);
+	mu_assert_int_eq(3, num[1]);
+	mu_assert_int_eq(5, num[2]);
+
+	ft_lstclear(&head->stack_b, free);
+	free(head);
+	free(num);
+}
+
+MU_TEST(test_make_array_with_ten_elements)
+{
+	t_stacks	*head;
+	int		*num;
+
+	head = calloc(sizeof(t_stacks), 1);
+	head->stack_b = calloc(sizeof(t_list), 1);
+	head->stack_b->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->stack_b->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+
+	head->stack_b->content = calloc(sizeof(int), 1);
+	head->stack_b->next->content = calloc(sizeof(int), 1);
+	head->stack_b->next->next->content = calloc(sizeof(int), 1);
+
+	*(int *)head->stack_b->content = 5;
+	*(int *)head->stack_b->next->content = 3;
+	*(int *)head->stack_b->next->next->content = 2;
+
+	num = make_ints_array_from_llst(&head, 3);
+
+	mu_assert_int_eq(2, num[0]);
+	mu_assert_int_eq(3, num[1]);
+	mu_assert_int_eq(5, num[2]);
+
+	ft_lstclear(&head->stack_b, free);
+	free(head);
+	free(num);
 }
 
 MU_TEST_SUITE(suite_swap)
@@ -1815,6 +1791,11 @@ MU_TEST_SUITE(suite_partition)
 	MU_RUN_TEST(test_array_with_eight_elements_expected_sending_four_to_the_other_stack);
 }
 
+MU_TEST_SUITE(suite_make_array_ints_from_llst)
+{
+	MU_RUN_TEST(test_make_array_of_three_elements);
+}
+
 int	main(int argc, char *argv[])
 {
 	MU_RUN_SUITE(suite_swap);
@@ -1833,6 +1814,7 @@ int	main(int argc, char *argv[])
 	MU_RUN_SUITE(suite_make_int_array);
 	MU_RUN_SUITE(suite_chunk_lenght);
 	/* MU_RUN_SUITE(suite_partition); */
+	MU_RUN_SUITE(suite_make_array_ints_from_llst);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

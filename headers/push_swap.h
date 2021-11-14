@@ -49,15 +49,16 @@ int		less_than_mid_point(t_list *lst, int mid_point, int *less_than_index);
 void	do_operation(int (*op)(), t_list **lst, const char *name_op);
 void	partition(t_list **stack_from, t_list **stack_to, int mid_point);
 int		chunk_lenght(int mid_point, int *array);
+int		check_sorted(t_list *stack);
 
 /* FUNCTION TO EXECUTE SORTING */
 void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array);
 
 /* FUNCTIONS QUICK_SORT*/
 void	quick_sort(int	*array, int beginning, int end);
-int		*make_ints_array(int argc, char **argv);
 
 /* FUNCTIONS TO SETUP THE SORT */
 void	setup_sorting(int argc, char **argv);
 int		*make_ints_array_from_llst(t_stacks **stacks, int len_chunck);
+int		*make_ints_array(int argc, char **argv);
 #endif

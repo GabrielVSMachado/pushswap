@@ -1152,7 +1152,7 @@ MU_TEST(test__error_receive_stack_a_not_NULL_and_stack_b_not_NULL_expected_no_me
 	mu_check(_error(&stacks) == 1);
 }
 
-/* TEST FUNCTION CHECK_SORTED */
+/* TEST FUNCTION CHECK_SORTED_CHUNCK IN B*/
 
 MU_TEST(test_check_sorted_with_unsorted_lst_with_three_elements)
 {
@@ -1167,7 +1167,7 @@ MU_TEST(test_check_sorted_with_unsorted_lst_with_three_elements)
 	head->next->content = n_arr;
 	head->next->next->content = n_arr + 1;
 
-	mu_check(check_chunck_sorted_in_b(head, 3) == 1);
+	mu_check(check_chunck_sorted_in_b(head, 3) == 0);
 
 	free(head->next->next);
 	free(head->next);
@@ -1188,7 +1188,7 @@ MU_TEST(test_check_sorted_with_sorted_lst_with_three_elements)
 	head->next->content = n_arr + 1;
 	head->next->next->content = n_arr;
 
-	mu_check(check_chunck_sorted_in_b(head, 3) == 0);
+	mu_check(check_chunck_sorted_in_b(head, 3) == 1);
 
 	free(head->next->next);
 	free(head->next);
@@ -1204,7 +1204,7 @@ MU_TEST(test_check_chunk_sorted_with_one_element)
 	head->content = malloc(sizeof(int));
 	*(int *)head->content = 5;
 
-	mu_check(check_chunck_sorted_in_b(head, 1) == 0);
+	mu_check(check_chunck_sorted_in_b(head, 1) == 1);
 
 	free(head->content);
 	free(head);

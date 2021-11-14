@@ -12,56 +12,34 @@
 
 #include "push_swap.h"
 
-static int	check_sorted(t_list *stack)
+static void	sort_b(t_stacks	**stacks, t_list *len_chunk)
 {
-	while (stack->next)
+	t_list		*tmp;
+	/* int			*ord_array_tmp; */
+
+	tmp = len_chunk;
+	while ((*stacks)->stack_b && tmp)
 	{
-		if (*(int *)stack->content > *(int *)stack->next->content)
-			return (0);
-		stack = stack->next;
+		if (*(int *)tmp->content == 1
+			|| check_chunck_sorted_in_b((*stacks)->stack_b,
+				*(int *)tmp->content))
+		{
+			while ((*(int *)tmp->content)-- > 0)
+			{
+				push(&(*stacks)->stack_b, &(*stacks)->stack_a);
+				ft_putendl_fd("pa", 1);
+			}
+		}
+		/* else */
+		/* { */
+		/* 	ord_array_tmp = make_ints_array_from_llst(stacks, */
+		/* 			*(int *)tmp->content); */
+		/* 	sort_chunck(&(*stacks)->stack_b, &(*stacks)->stack_a, */
+		/* 		*(int *)tmp->content, ord_array_tmp); */
+		/* } */
+		tmp = tmp->next;
 	}
-	return (1);
 }
-
-int	*make_ints_array_from_llst(t_stacks **stacks, int len_chunck)
-{
-	int		*array;
-	t_list	*llst_tmp;
-	int		len_array;
-
-	array = (int *)malloc(sizeof(int) * len_chunck);
-	if (!array)
-		exit(_error(*stacks));
-	llst_tmp = (*stacks)->stack_b;
-	len_array = len_chunck;
-	while (len_chunck-- > 0)
-	{
-		array[len_chunck] = *(int *)llst_tmp->content;
-		llst_tmp = llst_tmp->next;
-	}
-	quick_sort(array, 0, len_array - 1);
-	return (array);
-}
-
-/* static void	sort_b(t_stacks	**stacks, t_list	*chunck_lenghts) */
-/* { */
-/* 	t_list	*tmp; */
-/* 	int		*ord_array_tmp; */
-
-/* 	tmp = chunck_lenghts; */
-/* 	while ((*stacks)->stack_b) */
-/* 	{ */
-/* 		ord_array_tmp = make_ints_array_from_llst(stacks, */
-/* 				*(int *)tmp->content); */
-/* 		if (*(int *)tmp->content == 1) */
-/* 		{ */
-/* 			push(&(*stacks)->stack_b, &(*stacks)->stack_a); */
-/* 			ft_putendl_fd("pa", 1); */
-/* 		} */
-/* 		else */
-/* 			sort_chunck(&(*stacks)->stack_b, &(*stacks)->stack_a, *(int *)tmp->content); */
-/* 	} */
-/* } */
 
 void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
 {
@@ -83,6 +61,7 @@ void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
 	}
 	if (stacks->stack_a != NULL && !check_sorted(stacks->stack_a))
 		do_operation(swap, &stacks->stack_a, "sa");
+	sort_b(&stacks, chunck_lenghts);
 	free(*ord_array);
 	ft_lstclear(&chunck_lenghts, free);
 }

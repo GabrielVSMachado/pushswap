@@ -27,16 +27,16 @@ int	check_chunck_sorted_in_b(t_list *lst, int lenght)
 	while (--lenght)
 	{
 		if (*(int *)lst->content < *(int *)lst->next->content)
-			return (1);
+			return (0);
 		lst = lst->next;
 	}
-	return (0);
+	return (1);
 }
 
 int	less_than_mid_point(t_list *lst, int mid_point, int *less_than_index)
 {
 	*less_than_index = 0;
-	while (lst->next)
+	while (lst)
 	{
 		if (*(int *)lst->content < mid_point)
 			return (1);

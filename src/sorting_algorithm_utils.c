@@ -52,23 +52,21 @@ void	do_operation(int (*op)(), t_list **lst, const char *name_op)
 	ft_putendl_fd((char *)name_op, 1);
 }
 
-void	partition(t_list **stack_from, t_list **stack_to, int mid_point)
+void	partition(t_list **from, t_list **to, int mid_point)
 {
 	int	n_index;
-	int	m_index;
 
 	n_index = 0;
-	m_index = ft_lstsize(*stack_from) / 2;
-	while (less_than_mid_point(*stack_from, mid_point, &n_index))
+	while (less_than_mid_point(*from, mid_point, &n_index))
 	{
-		if (*(int *)(*stack_from)->content < mid_point)
+		if (*(int *)(*from)->content < mid_point)
 		{
-			push(stack_from, stack_to);
+			push(from, to);
 			ft_putendl_fd("pb", 1);
 		}
-		else if (n_index < m_index)
-			do_operation(rotate_to_up, stack_from, "ra");
+		else if (*(int *)ft_lstlast(*from)->content < mid_point)
+			do_operation(rotate_to_down, from, "rra");
 		else
-			do_operation(rotate_to_down, stack_from, "rra");
+			do_operation(rotate_to_up, from, "ra");
 	}
 }

@@ -12,10 +12,61 @@
 
 #include "push_swap.h"
 
+static void	sort_highers_chuncks(t_list **from, t_list **to, int len_chunck)
+{
+	int		n_ra;
+	t_list	*high_element;
+
+	n_ra = 0;
+	while (len_chunck)
+	{
+		high_element = find_the_higher_element_in_lst(*from);
+		if ((*from) == high_element)
+		{
+			push(from, to);
+			ft_putendl_fd("pa", 1);
+			(len_chunck)--;
+			while (n_ra != 0)
+			{
+				high_element = find_the_higher_element_in_lst(*from);
+				if (high_element == (*from))
+				{
+					push(from, to);
+					ft_putendl_fd("pa", 1);
+					(len_chunck)--;
+				}
+				do_operation(rotate_to_down, from, "rrb");
+				n_ra--;
+			}
+		}
+		else if ((*from)->next == high_element)
+			do_operation(swap, from, "sb");
+		else
+		{
+			do_operation(rotate_to_up, from, "rb");
+			n_ra++;
+		}
+	}
+}
+
+static void	sort_chunck(t_list **from, t_list **to, int len_chunck)
+{
+	if (len_chunck == 2 && !check_chunck_sorted_in_b(*from, len_chunck))
+	{
+		do_operation(swap, from, "sb");
+		while (len_chunck-- > 0)
+		{
+			push(from, to);
+			ft_putendl_fd("pa", 1);
+		}
+	}
+	else
+		sort_highers_chuncks(from, to, len_chunck);
+}
+
 static void	sort_b(t_stacks	**stacks, t_list *len_chunk)
 {
 	t_list		*tmp;
-	/* int			*ord_array_tmp; */
 
 	tmp = len_chunk;
 	while ((*stacks)->stack_b && tmp)
@@ -30,13 +81,11 @@ static void	sort_b(t_stacks	**stacks, t_list *len_chunk)
 				ft_putendl_fd("pa", 1);
 			}
 		}
-		/* else */
-		/* { */
-		/* 	ord_array_tmp = make_ints_array_from_llst(stacks, */
-		/* 			*(int *)tmp->content); */
-		/* 	sort_chunck(&(*stacks)->stack_b, &(*stacks)->stack_a, */
-		/* 		*(int *)tmp->content, ord_array_tmp); */
-		/* } */
+		else
+		{
+			sort_chunck(&(*stacks)->stack_b, &(*stacks)->stack_a,
+				*(int *)tmp->content);
+		}
 		tmp = tmp->next;
 	}
 }

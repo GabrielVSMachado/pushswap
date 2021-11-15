@@ -42,3 +42,34 @@ int	*make_ints_array_from_llst(t_stacks **stacks, int len_chunck)
 	quick_sort(array, 0, len_array - 1);
 	return (array);
 }
+
+t_list	*find_the_higher_element_in_lst(t_list *lst)
+{
+	t_list	*high_element;
+
+	high_element = lst;
+	while (lst)
+	{
+		if (*(int *)lst->content > *(int *)high_element->content)
+			high_element = lst;
+		lst = lst->next;
+	}
+	return (high_element);
+}
+
+int	index_of_high_element(t_list *lst, t_list *high)
+{
+	int	index;
+	int	size;
+
+	index = 0;
+	size = ft_lstsize(lst);
+	while (lst != high)
+	{
+		lst = lst->next;
+		index++;
+	}
+	if (index > size / 2)
+		index -= size;
+	return (index);
+}

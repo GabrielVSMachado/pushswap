@@ -50,6 +50,8 @@ void	do_operation(int (*op)(), t_list **lst, const char *name_op);
 void	partition(t_list **stack_from, t_list **stack_to, int mid_point);
 int		chunk_lenght(int mid_point, int *array);
 int		check_sorted(t_list *stack);
+t_list	*find_the_higher_element_in_lst(t_list *lst);
+int		index_of_high_element(t_list *lst, t_list *high);
 
 /* FUNCTION TO EXECUTE SORTING */
 void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array);

@@ -24,8 +24,8 @@ OBJ_TEST := $(SRC_TEST:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # MANDATORY PART
 FILES_UTILS := moviment_functions.c utils_check_parser.c utils.c sorting_algorithm_utils.c quick_sort.c\
-			   init_sorting.c sorting_algorithm.c sorting_algorithm_utils2.c
-FILES := main.c $(FILES_UTILS)
+			   sorting_algorithm_utils2.c
+FILES := main.c sorting_algorithm.c init_sorting.c $(FILES_UTILS)
 
 SRC := $(addprefix $(SRC_DIR)/,$(FILES))
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

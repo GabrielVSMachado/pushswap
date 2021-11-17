@@ -1215,7 +1215,6 @@ MU_TEST(test_check_chunk_sorted_with_one_element)
 MU_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true)
 {
 	t_list	*head;
-	int		index;
 	int		nums[] = {1, 2};
 
 	head = (t_list *)calloc(sizeof(t_list), 1);
@@ -1224,8 +1223,7 @@ MU_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true)
 	head->content = nums;
 	head->next->content = nums + 1;
 
-	mu_check(less_than_mid_point(head, 2, &index) == TRUE);
-	mu_assert_int_eq(0, index);
+	mu_check(less_than_mid_point(head, 2) == TRUE);
 
 	free(head->next);
 	free(head);
@@ -1234,15 +1232,13 @@ MU_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true)
 MU_TEST(test_with_one_number_expected_false)
 {
 	t_list	*head;
-	int		index;
 	int		nums[] = {1};
 
 	head = (t_list *)calloc(sizeof(t_list), 1);
 
 	head->content = nums;
 
-	mu_check(less_than_mid_point(head, 1, &index) == FALSE);
-	mu_assert_int_eq(0, index);
+	mu_check(less_than_mid_point(head, 1) == FALSE);
 
 	free(head);
 }
@@ -1250,7 +1246,6 @@ MU_TEST(test_with_one_number_expected_false)
 MU_TEST(test_with_three_numbers_none_are_less_than_mid_point)
 {
 	t_list	*head;
-	int		index;
 	int		num[] = {3, 2, 4};
 
 	head = (t_list *)calloc(sizeof(t_list), 1);
@@ -1261,8 +1256,7 @@ MU_TEST(test_with_three_numbers_none_are_less_than_mid_point)
 	head->next->content = num + 1;
 	head->next->next->content = num + 2;
 
-	mu_check(less_than_mid_point(head, 2, &index) == FALSE);
-	mu_assert_int_eq(2, index);
+	mu_check(less_than_mid_point(head, 2) == FALSE);
 
 	free(head->next->next);
 	free(head->next);

@@ -33,15 +33,13 @@ int	check_chunck_sorted_in_b(t_list *lst, int lenght)
 	return (1);
 }
 
-int	less_than_mid_point(t_list *lst, int mid_point, int *less_than_index)
+int	less_than_mid_point(t_list *lst, int mid_point)
 {
-	*less_than_index = 0;
 	while (lst)
 	{
 		if (*(int *)lst->content < mid_point)
 			return (1);
 		lst = lst->next;
-		(*less_than_index)++;
 	}
 	return (0);
 }
@@ -54,10 +52,7 @@ void	do_operation(int (*op)(), t_list **lst, const char *name_op)
 
 void	partition(t_list **from, t_list **to, int mid_point)
 {
-	int	n_index;
-
-	n_index = 0;
-	while (less_than_mid_point(*from, mid_point, &n_index))
+	while (less_than_mid_point(*from, mid_point))
 	{
 		if (*(int *)(*from)->content < mid_point)
 		{

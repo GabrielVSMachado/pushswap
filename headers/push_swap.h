@@ -19,6 +19,12 @@
 # include <limits.h>
 # include "libft.h"
 
+struct s_sortb
+{
+	int	*o_chunk;
+	int	last_chunck:1;
+};
+
 typedef struct s_stacks
 {
 	t_list	*stack_a;
@@ -45,13 +51,15 @@ void	clear_stacks(t_stacks *stacks);
 
 /* HELPERS FUNCTIONS TO SORTING ALGORITHM */
 int		check_chunck_sorted_in_b(t_list *lst, int lenght);
-int		less_than_mid_point(t_list *lst, int mid_point, int *less_than_index);
+int		less_than_mid_point(t_list *lst, int mid_point);
 void	do_operation(int (*op)(), t_list **lst, const char *name_op);
 void	partition(t_list **stack_from, t_list **stack_to, int mid_point);
 int		chunk_lenght(int mid_point, int *array);
 int		check_sorted(t_list *stack);
-t_list	*find_the_higher_element_in_lst(t_list *lst);
-int		index_of_high_element(t_list *lst, t_list *high);
+t_list	*find_element(t_list *lst, int element, int op);
+int		index_of_element(t_list *lst, t_list *element);
+int		number_of_op(t_list *stack, const t_list *element, int (*op)());
+void	make_decision(t_list **stack_a, int element);
 
 /* FUNCTION TO EXECUTE SORTING */
 void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array);
@@ -61,6 +69,6 @@ void	quick_sort(int	*array, int beginning, int end);
 
 /* FUNCTIONS TO SETUP THE SORT */
 void	setup_sorting(int argc, char **argv);
-int		*make_ints_array_from_llst(t_stacks **stacks, int len_chunck);
+int		*make_int_array(t_stacks **stacks, int len_chunck);
 int		*make_ints_array(int argc, char **argv);
 #endif

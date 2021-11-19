@@ -1602,7 +1602,7 @@ MU_TEST(test_make_array_of_three_elements)
 	*(int *)head->stack_b->next->content = 3;
 	*(int *)head->stack_b->next->next->content = 2;
 
-	num = make_ints_array_from_llst(&head, 3);
+	num = make_int_array(&head, 3);
 
 	mu_assert_int_eq(2, num[0]);
 	mu_assert_int_eq(3, num[1]);
@@ -1637,7 +1637,7 @@ MU_TEST(test_make_array_with_ten_elements)
 	*(int *)head->stack_b->next->content = 3;
 	*(int *)head->stack_b->next->next->content = 2;
 
-	num = make_ints_array_from_llst(&head, 3);
+	num = make_int_array(&head, 3);
 
 	mu_assert_int_eq(2, num[0]);
 	mu_assert_int_eq(3, num[1]);
@@ -1646,6 +1646,77 @@ MU_TEST(test_make_array_with_ten_elements)
 	ft_lstclear(&head->stack_b, free);
 	free(head);
 	free(num);
+}
+
+/* TEST FUNCTION FIND_ELEMENT */
+MU_TEST(test_lst_with_4_elements_expected_element_96)
+{
+	t_list	*head;
+	t_list	*element;
+
+	head = calloc(sizeof(t_list), 1);
+	head->next = calloc(sizeof(t_list), 1);
+	head->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next = calloc(sizeof(t_list), 1);
+
+	head->content = calloc(sizeof(int), 1);
+	head->next->content = calloc(sizeof(int), 1);
+	head->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->content = calloc(sizeof(int), 1);
+
+	*(int *)head->content = 96;
+	*(int *)head->next->content = 97;
+	*(int *)head->next->next->content = 98;
+	*(int *)head->next->next->next->content = 99;
+
+	element = find_element(head, 94, -1);
+
+	mu_assert_int_eq(96, *(int *)element->content);
+	mu_assert_int_eq(96, *(int *)head->content);
+
+	free(head->next->next->next->content);
+	free(head->next->next->content);
+	free(head->next->content);
+	free(head->content);
+	free(head->next->next->next);
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+MU_TEST(test_lst_with_4_elements_expected_element_92)
+{
+	t_list	*head;
+	t_list	*element;
+
+	head = calloc(sizeof(t_list), 1);
+	head->next = calloc(sizeof(t_list), 1);
+	head->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next = calloc(sizeof(t_list), 1);
+
+	head->content = calloc(sizeof(int), 1);
+	head->next->content = calloc(sizeof(int), 1);
+	head->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->content = calloc(sizeof(int), 1);
+
+	*(int *)head->content = 97;
+	*(int *)head->next->content = 98;
+	*(int *)head->next->next->content = 99;
+	*(int *)head->next->next->next->content = 92;
+
+	element = find_element(head, 93, 1);
+
+	mu_assert_int_eq(92, *(int *)element->content);
+	mu_assert_int_eq(97, *(int *)head->content);
+
+	free(head->next->next->next->content);
+	free(head->next->next->content);
+	free(head->next->content);
+	free(head->content);
+	free(head->next->next->next);
+	free(head->next->next);
+	free(head->next);
+	free(head);
 }
 
 MU_TEST_SUITE(suite_swap)
@@ -1790,6 +1861,12 @@ MU_TEST_SUITE(suite_make_array_ints_from_llst)
 	MU_RUN_TEST(test_make_array_of_three_elements);
 }
 
+MU_TEST_SUITE(suite_find_element)
+{
+	MU_RUN_TEST(test_lst_with_4_elements_expected_element_96);
+	MU_RUN_TEST(test_lst_with_4_elements_expected_element_92);
+}
+
 int	main(int argc, char *argv[])
 {
 	MU_RUN_SUITE(suite_swap);
@@ -1809,6 +1886,7 @@ int	main(int argc, char *argv[])
 	MU_RUN_SUITE(suite_chunk_lenght);
 	/* MU_RUN_SUITE(suite_partition); */
 	MU_RUN_SUITE(suite_make_array_ints_from_llst);
+	MU_RUN_SUITE(suite_find_element);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

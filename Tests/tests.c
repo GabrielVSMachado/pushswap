@@ -1586,73 +1586,92 @@ MU_TEST(test_array_with_eight_elements_expected_sending_four_to_the_other_stack)
 /* TEST MAKE ARRAY OF THREE ELEMENTS */
 MU_TEST(test_make_array_of_three_elements)
 {
-	t_stacks	*head;
+	t_list	*head;
 	int		*num;
 
-	head = calloc(sizeof(t_stacks), 1);
-	head->stack_b = calloc(sizeof(t_list), 1);
-	head->stack_b->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next = calloc(sizeof(t_list), 1);
+	head = calloc(sizeof(t_list), 1);
+	head->next = calloc(sizeof(t_list), 1);
+	head->next->next = calloc(sizeof(t_list), 1);
 
-	head->stack_b->content = calloc(sizeof(int), 1);
-	head->stack_b->next->content = calloc(sizeof(int), 1);
-	head->stack_b->next->next->content = calloc(sizeof(int), 1);
+	head->content = calloc(sizeof(int), 1);
+	head->next->content = calloc(sizeof(int), 1);
+	head->next->next->content = calloc(sizeof(int), 1);
 
-	*(int *)head->stack_b->content = 5;
-	*(int *)head->stack_b->next->content = 3;
-	*(int *)head->stack_b->next->next->content = 2;
+	*(int *)head->content = 5;
+	*(int *)head->next->content = 3;
+	*(int *)head->next->next->content = 2;
 
-	num = make_int_array(&head, 3);
+	num = make_int_array(head);
 
 	mu_assert_int_eq(2, num[0]);
 	mu_assert_int_eq(3, num[1]);
 	mu_assert_int_eq(5, num[2]);
 
-	ft_lstclear(&head->stack_b, free);
-	free(head);
+	ft_lstclear(&head, free);
 	free(num);
 }
 
 MU_TEST(test_make_array_with_ten_elements)
 {
-	t_stacks	*head;
+	t_list	*head;
 	int		*num;
 
-	head = calloc(sizeof(t_stacks), 1);
-	head->stack_b = calloc(sizeof(t_list), 1);
-	head->stack_b->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next->next->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next->next->next->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
-	head->stack_b->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head = calloc(sizeof(t_list), 1);
+	head->next = calloc(sizeof(t_list), 1);
+	head->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
 
-	head->stack_b->content = calloc(sizeof(int), 1);
-	head->stack_b->next->content = calloc(sizeof(int), 1);
-	head->stack_b->next->next->content = calloc(sizeof(int), 1);
+	head->content = calloc(sizeof(int), 1);
+	head->next->content = calloc(sizeof(int), 1);
+	head->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
 
-	*(int *)head->stack_b->content = 5;
-	*(int *)head->stack_b->next->content = 3;
-	*(int *)head->stack_b->next->next->content = 2;
+	*(int *)head->content = 5;
+	*(int *)head->next->content = 3;
+	*(int *)head->next->next->content = 2;
+	*(int *)head->next->next->next->content = 4;
+	*(int *)head->next->next->next->next->content = 6;
+	*(int *)head->next->next->next->next->next->content = 8;
+	*(int *)head->next->next->next->next->next->next->content = 10;
+	*(int *)head->next->next->next->next->next->next->next->content = 12;
+	*(int *)head->next->next->next->next->next->next->next->next->content = 14;
+	*(int *)head->next->next->next->next->next->next->next->next->next->content = 16;
 
-	num = make_int_array(&head, 3);
+	num = make_int_array(head);
 
 	mu_assert_int_eq(2, num[0]);
 	mu_assert_int_eq(3, num[1]);
-	mu_assert_int_eq(5, num[2]);
+	mu_assert_int_eq(4, num[2]);
+	mu_assert_int_eq(5, num[3]);
+	mu_assert_int_eq(6, num[4]);
+	mu_assert_int_eq(8, num[5]);
+	mu_assert_int_eq(10, num[6]);
+	mu_assert_int_eq(12, num[7]);
+	mu_assert_int_eq(14, num[8]);
+	mu_assert_int_eq(16, num[9]);
 
-	ft_lstclear(&head->stack_b, free);
-	free(head);
+	ft_lstclear(&head, free);
 	free(num);
 }
 
 /* TEST FUNCTION FIND_ELEMENT */
-MU_TEST(test_lst_with_4_elements_expected_element_96)
+MU_TEST(test_lst_with_4_elements_expected_element_next_96_prev_null)
 {
 	t_list	*head;
-	t_list	*element;
+	t_list	*next;
+	t_list	*prev;
 
 	head = calloc(sizeof(t_list), 1);
 	head->next = calloc(sizeof(t_list), 1);
@@ -1669,9 +1688,10 @@ MU_TEST(test_lst_with_4_elements_expected_element_96)
 	*(int *)head->next->next->content = 98;
 	*(int *)head->next->next->next->content = 99;
 
-	element = find_element(head, 94, -1);
+	mu_check(find_the_next_and_prev_element(head, 94, &next, &prev) == 1);
 
-	mu_assert_int_eq(96, *(int *)element->content);
+	mu_check(prev == NULL);
+	mu_assert_int_eq(96, *(int *)next->content);
 	mu_assert_int_eq(96, *(int *)head->content);
 
 	free(head->next->next->next->content);
@@ -1684,10 +1704,11 @@ MU_TEST(test_lst_with_4_elements_expected_element_96)
 	free(head);
 }
 
-MU_TEST(test_lst_with_4_elements_expected_element_92)
+MU_TEST(test_lst_with_4_elements_expected_next_92_prev_85)
 {
 	t_list	*head;
-	t_list	*element;
+	t_list	*next;
+	t_list	*prev;
 
 	head = calloc(sizeof(t_list), 1);
 	head->next = calloc(sizeof(t_list), 1);
@@ -1701,18 +1722,178 @@ MU_TEST(test_lst_with_4_elements_expected_element_92)
 
 	*(int *)head->content = 97;
 	*(int *)head->next->content = 98;
-	*(int *)head->next->next->content = 99;
+	*(int *)head->next->next->content = 85;
 	*(int *)head->next->next->next->content = 92;
 
-	element = find_element(head, 93, 1);
+	mu_check(find_the_next_and_prev_element(head, 91, &next, &prev) == 1);
 
-	mu_assert_int_eq(92, *(int *)element->content);
+	mu_assert_int_eq(92, *(int *)next->content);
+	mu_assert_int_eq(85, *(int *)prev->content);
 	mu_assert_int_eq(97, *(int *)head->content);
 
 	free(head->next->next->next->content);
 	free(head->next->next->content);
 	free(head->next->content);
 	free(head->content);
+	free(head->next->next->next);
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+MU_TEST(test_lst_with_20_elements_expected_next_element_76_prev_12)
+{
+	t_list	*head;
+	t_list	*next;
+	t_list	*prev;
+
+	head = calloc(sizeof(t_list), 1);
+	head->next = calloc(sizeof(t_list), 1);
+	head->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next = calloc(sizeof(t_list), 1);
+
+	head->content = calloc(sizeof(int), 1);
+	head->next->content = calloc(sizeof(int), 1);
+	head->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = calloc(sizeof(int), 1);
+
+	*(int *)head->content = 97;
+	*(int *)head->next->content = 98;
+	*(int *)head->next->next->content = 99;
+	*(int *)head->next->next->next->content = 92;
+	*(int *)head->next->next->next->next->content = 91;
+	*(int *)head->next->next->next->next->next->content = 90;
+	*(int *)head->next->next->next->next->next->next->content = 89;
+	*(int *)head->next->next->next->next->next->next->next->content = 12;
+	*(int *)head->next->next->next->next->next->next->next->next->content = 87;
+	*(int *)head->next->next->next->next->next->next->next->next->next->content = 86;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->content = 85;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->content = 84;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->content = 83;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 82;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 81;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 80;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 79;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 78;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 77;
+	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 76;
+
+	mu_check(find_the_next_and_prev_element(head, 13, &next, &prev) == 1);
+
+	mu_assert_int_eq(12, *(int *)prev->content);
+	mu_assert_int_eq(76, *(int *)next->content);
+	mu_assert_int_eq(97, *(int *)head->content);
+
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->next->content);
+	free(head->next->next->next->next->next->content);
+	free(head->next->next->next->next->content);
+	free(head->next->next->next->content);
+	free(head->next->next->content);
+	free(head->next->content);
+	free(head->content);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next->next);
+	free(head->next->next->next->next->next->next);
+	free(head->next->next->next->next->next);
+	free(head->next->next->next->next);
+	free(head->next->next->next);
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+MU_TEST(test_lst_with_5_elements_expected_next_96_prev_94)
+{
+	t_list	*head;
+	t_list	*next;
+	t_list	*prev;
+
+	head = calloc(sizeof(t_list), 1);
+	head->next = calloc(sizeof(t_list), 1);
+	head->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next = calloc(sizeof(t_list), 1);
+	head->next->next->next->next = calloc(sizeof(t_list), 1);
+
+	head->content = calloc(sizeof(int), 1);
+	head->next->content = calloc(sizeof(int), 1);
+	head->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->content = calloc(sizeof(int), 1);
+	head->next->next->next->next->content = calloc(sizeof(int), 1);
+
+	*(int *)head->content = 94;
+	*(int *)head->next->content = 96;
+	*(int *)head->next->next->content = 97;
+	*(int *)head->next->next->next->content = 98;
+	*(int *)head->next->next->next->next->content = 99;
+
+	mu_check(find_the_next_and_prev_element(head, 95, &next, &prev) == 1);
+
+	mu_assert_int_eq(96, *(int *)next->content);
+	mu_assert_int_eq(94, *(int *)prev->content);
+	mu_assert_int_eq(94, *(int *)head->content);
+
+	free(head->next->next->next->next->content);
+	free(head->next->next->next->content);
+	free(head->next->next->content);
+	free(head->next->content);
+	free(head->content);
+	free(head->next->next->next->next);
 	free(head->next->next->next);
 	free(head->next->next);
 	free(head->next);
@@ -1859,12 +2040,15 @@ MU_TEST_SUITE(suite_partition)
 MU_TEST_SUITE(suite_make_array_ints_from_llst)
 {
 	MU_RUN_TEST(test_make_array_of_three_elements);
+	MU_RUN_TEST(test_make_array_with_ten_elements);
 }
 
 MU_TEST_SUITE(suite_find_element)
 {
-	MU_RUN_TEST(test_lst_with_4_elements_expected_element_96);
-	MU_RUN_TEST(test_lst_with_4_elements_expected_element_92);
+	MU_RUN_TEST(test_lst_with_4_elements_expected_element_next_96_prev_null);
+	MU_RUN_TEST(test_lst_with_4_elements_expected_next_92_prev_85);
+	MU_RUN_TEST(test_lst_with_20_elements_expected_next_element_76_prev_12);
+	MU_RUN_TEST(test_lst_with_5_elements_expected_next_96_prev_94);
 }
 
 int	main(int argc, char *argv[])

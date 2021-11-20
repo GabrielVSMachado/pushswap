@@ -23,84 +23,109 @@ int	check_sorted(t_list *stack)
 	return (1);
 }
 
-int	*make_int_array(t_stacks **stacks, int len_chunck)
+int	*make_int_array(t_list *lst)
 {
-	t_list	*llst_tmp;
-	int		len_ord_array;
-	int		*ord_array;
-
-	ord_array = (int *)malloc(sizeof(int) * len_chunck);
-	if (!ord_array)
-		exit(_error(*stacks));
-	llst_tmp = (*stacks)->stack_b;
-	len_ord_array = len_chunck;
-	while (len_chunck-- > 0)
-	{
-		(ord_array)[len_chunck] = *(int *)llst_tmp->content;
-		llst_tmp = llst_tmp->next;
-	}
-	quick_sort(ord_array, 0, len_ord_array - 1);
-	return (ord_array);
-}
-
-t_list	*find_element(t_list *lst, int element, int op)
-{
-	t_list	*tmp[2];
+	int		*array;
 	int		counter;
+	int		size;
 
-	tmp[0] = lst;
-	counter = op;
-	while (tmp[0])
-	{
-		tmp[1] = lst;
-		while (tmp[1])
-		{
-			if (*(int *)(tmp[1])->content + counter == element)
-				return (tmp[1]);
-			tmp[1] = (tmp[1])->next;
-		}
-		counter += op;
-		tmp[0] = (tmp[0])->next;
-	}
-	return (NULL);
-}
-
-int	index_of_element(t_list *lst, t_list *element)
-{
-	int	index;
-	int	size;
-
-	index = 0;
 	size = ft_lstsize(lst);
-	while (lst != element)
+	array = (int *)malloc(sizeof(int) * size);
+	if (!array)
+		return (NULL);
+	counter = 0;
+	while (counter < size)
 	{
+		array[counter] = *(int *)lst->content;
 		lst = lst->next;
-		index++;
+		counter++;
 	}
-	if (index > size / 2)
-		index -= size;
-	return (index);
+	quick_sort(array, 0, size - 1);
+	return (array);
 }
 
-void	make_decision(t_list **stack_a, int element)
+int	number_of_ra(t_list *stack, const t_list *element)
+{
+	int		result;
+
+	result = 0;
+	while (*(int *)stack->content != *(int *)element->content)
+	{
+		result++;
+		stack = stack->next;
+	}
+	return (result);
+}
+
+int	find_the_next_and_prev_element(t_list *stack, int element,
+		t_list **next, t_list **prev)
+{
+	int	*ord_array;
+	int	index;
+
+	ord_array = make_int_array(stack);
+	if (!ord_array)
+		return (ERROR);
+	index = 0;
+	while (ord_array[index] < element)
+		index++;
+	*prev = NULL;
+	*next = NULL;
+	while (stack)
+	{
+		if (*(int *)stack->content == ord_array[index])
+			(*next) = stack;
+		if (index - 1 >= 0 && *(int *)stack->content == ord_array[index - 1])
+			(*prev) = stack;
+		stack = stack->next;
+	}
+	free(ord_array);
+	return (SUCCESS);
+}
+
+int	make_decision(t_stacks **stacks, int *len_chunck)
 {
 	t_list	*higher;
 	t_list	*lower;
 	int		n_ra[2];
 	int		n_rra[2];
 
-	ft_bzero(&n_ra, sizeof(int) * 2);
-	ft_bzero(&n_rra, sizeof(int) * 2);
-	higher = find_element(*stack_a, element, -1);
-	lower = find_element(*stack_a, element, +1);
-	if (higher)
+	ft_bzero(n_ra, sizeof(n_ra));
+	ft_bzero(n_rra, sizeof(n_rra));
+	if (find_the_next_and_prev_element((*stacks)->stack_a,
+			*(int *)((*stacks)->stack_b->content), &higher, &lower) == ERROR)
+		return (ERROR);
+	if (lower && higher)
 	{
-		n_ra[0] = number_of_op(*stack_a, higher, rotate_to_up);
-		n_rra[0] = number_of_op(*stack_a, higher, rotate_to_down);
+		n_ra[0] = number_of_ra((*stacks)->stack_a, higher);
+		n_rra[0] = number_of_rra((*stacks)->stack_a, higher);
+		n_ra[1] = number_of_ra((*stacks)->stack_a, lower); 
+		n_rra[1] = number_of_rra((*stacks)->stack_a, lower);
+		n_rra[1]--;
+		n_ra[1]++;
+		if (n_ra[1] < n_ra[0])
+			n_ra[0] = n_ra[1];
+		if (n_rra[1] < n_rra[0])
+			n_rra[0] = n_rra[1];
 	}
-	if (lower)
+	else if (higher)
 	{
-		n_ra[1] = number_of_op(*stack_a, lower, rotate_to_up);
-		n_rra[1] = number_of_op(*stack_a, lower, rotate_to_down);
+		n_ra[0] = number_of_ra((*stacks)->stack_a, higher);
+		n_rra[0] = number_of_rra((*stacks)->stack_a, higher);
 	}
+	else if (lower)
+	{
+		n_ra[0] = number_of_ra((*stacks)->stack_a, lower); 
+		n_rra[0] = number_of_rra((*stacks)->stack_a, lower);
+	}
+	if (n_ra[0] > n_rra[0])
+		while (n_rra[0]-- > 0)
+			do_operation(rotate_to_down, &(*stacks)->stack_a, "rra");
+	else
+		while (n_ra[0]-- > 0)
+			do_operation(rotate_to_up, &(*stacks)->stack_a, "ra");
+	push(&(*stacks)->stack_b, &(*stacks)->stack_a);
+	ft_putendl_fd("pa", 1);
+	(*len_chunck)--;
+	return (SUCCESS);
 }

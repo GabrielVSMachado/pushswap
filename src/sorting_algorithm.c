@@ -12,68 +12,67 @@
 
 #include "push_swap.h"
 
-static void	sort_highers_chuncks(t_list **from, t_list **to, int *len_chunck)
+static int	sort_highers_chuncks(t_stacks **stacks, int *len_chunck)
 {
-	if (*(int *)(*from)->content == *(int *)(*to)->content - 1)
+	if (*(int *)((*stacks)->stack_b->content)
+			== *(int *)((*stacks)->stack_a->content) - 1)
 	{
-		push(from, to);
+		push(&(*stacks)->stack_b, &(*stacks)->stack_a);
 		ft_putendl_fd("pa", 1);
-		(*len_chunck)--;
 	}
 	else
-	{
-		make_decision(to, *(int *)(*from)->content);
-		push(from, to);
-		ft_putendl_fd("pa", 1);
-		(*len_chunck)--;
-	}
+		if (make_decision(stacks, len_chunck) == ERROR)
+			return (ERROR);
+	return (SUCCESS);
 }
 
-static void	sort_chunck(t_list **from, t_list **to, int len_chunck)
+static int	sort_chunck(t_stacks **stacks, int len_chunck)
 {
-	while (*from)
+	while (len_chunck)
 	{
 		/* if (len_chunck <= 2) */
 		/* { */
-		/* 	if (!check_chunck_sorted_in_b(*from, len_chunck)) */
-		/* 		do_operation(swap, from, "sb"); */
+		/* 	if (!check_chunck_sorted_in_b((*stacks)->stack_b, len_chunck)) */
+		/* 		do_operation(swap, &(*stacks)->stack_b, "sb"); */
 		/* 	while (len_chunck > 0) */
 		/* 	{ */
-		/* 		push(from, to); */
+		/* 		push(&(*stacks)->stack_b, &(*stacks)->stack_a); */
 		/* 		ft_putendl_fd("pa", 1); */
 		/* 		len_chunck--; */
 		/* 	} */
 		/* } */
 		/* else */
-		sort_highers_chuncks(from, to, &len_chunck);
+		if (sort_highers_chuncks(stacks, &len_chunck) == ERROR)
+			return (ERROR);
 	}
+	return (SUCCESS);
 }
 
-static void	sort_b(t_stacks	**stacks, t_list *len_chunk)
+static int	sort_b(t_stacks	**stacks, t_list *len_chunck)
 {
 	t_list			*tmp;
 
-	tmp = len_chunk;
-	while ((*stacks)->stack_b && tmp)
+	tmp = len_chunck;
+	while ((*stacks)->stack_b)
 	{
-		if (*(int *)tmp->content == 1
-			|| check_chunck_sorted_in_b((*stacks)->stack_b,
-				*(int *)tmp->content))
-		{
-			while ((*(int *)tmp->content)-- > 0)
-			{
-				push(&(*stacks)->stack_b, &(*stacks)->stack_a);
-				ft_putendl_fd("pa", 1);
-			}
-		}
-		else
-			sort_chunck(&(*stacks)->stack_b, &(*stacks)->stack_a,
-				*(int *)tmp->content);
+		/* if (*(int *)tmp->content == 1 */
+		/* 	|| check_chunck_sorted_in_b((*stacks)->stack_b, */
+		/* 		*(int *)tmp->content)) */
+		/* { */
+		/* 	while ((*(int *)tmp->content)-- > 0) */
+		/* 	{ */
+		/* 		push(&(*stacks)->stack_b, &(*stacks)->stack_a); */
+		/* 		ft_putendl_fd("pa", 1); */
+		/* 	} */
+		/* } */
+		if (sort_chunck(stacks, *(int *)tmp->content) == ERROR)
+			return (ERROR);
 		tmp = tmp->next;
 	}
+	return (SUCCESS);
 }
 
-void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
+int	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
 {
 	int		*tmp;
 	int		len;
@@ -81,6 +80,8 @@ void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
 
 	tmp = *ord_array;
 	chunck_lenghts = NULL;
+	if (size_ord_array == 1)
+		ft_putendl_fd("1", 1);
 	while (stacks->stack_a != NULL && ft_lstsize(stacks->stack_a) > 2)
 	{
 		partition(&stacks->stack_a, &stacks->stack_b,
@@ -93,7 +94,9 @@ void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
 	}
 	if (stacks->stack_a != NULL && !check_sorted(stacks->stack_a))
 		do_operation(swap, &stacks->stack_a, "sa");
-	sort_b(&stacks, chunck_lenghts);
 	free(*ord_array);
+	if (sort_b(&stacks, chunck_lenghts) == ERROR)
+		return (ft_lstclear(&chunck_lenghts, free), ERROR);
 	ft_lstclear(&chunck_lenghts, free);
+	return (SUCCESS);
 }

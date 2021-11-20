@@ -21,6 +21,7 @@ void	setup_sorting(int argc, char **argv)
 	stacks.stack_a = make_llst_of_ints(argc, argv);
 	ord_array = make_ints_array(argc, argv);
 	quick_sort(ord_array, 0, argc - 2);
-	sorting(&ord_array, &stacks, argc - 1);
+	if (sorting(&ord_array, &stacks, argc - 1) == ERROR)
+		exit(_error(&stacks));
 	clear_stacks(&stacks);
 }

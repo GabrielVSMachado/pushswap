@@ -13,17 +13,13 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 # define LEN_MIN_INT 11
+# define ERROR -1
+# define SUCCESS 1
 
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
 # include "libft.h"
-
-struct s_sortb
-{
-	int	*o_chunk;
-	int	last_chunck:1;
-};
 
 typedef struct s_stacks
 {
@@ -56,19 +52,21 @@ void	do_operation(int (*op)(), t_list **lst, const char *name_op);
 void	partition(t_list **stack_from, t_list **stack_to, int mid_point);
 int		chunk_lenght(int mid_point, int *array);
 int		check_sorted(t_list *stack);
-t_list	*find_element(t_list *lst, int element, int op);
+int		find_the_next_and_prev_element(t_list *stack, int element,
+			t_list **next, t_list **prev);
 int		index_of_element(t_list *lst, t_list *element);
-int		number_of_op(t_list *stack, const t_list *element, int (*op)());
-void	make_decision(t_list **stack_a, int element);
+int		number_of_ra(t_list *stack, const t_list *element);
+int		number_of_rra(t_list *stack, const t_list *element);
+int		make_decision(t_stacks **stacks, int *len_chunck);
 
 /* FUNCTION TO EXECUTE SORTING */
-void	sorting(int **ord_array, t_stacks *stacks, int size_ord_array);
+int		sorting(int **ord_array, t_stacks *stacks, int size_ord_array);
 
 /* FUNCTIONS QUICK_SORT*/
 void	quick_sort(int	*array, int beginning, int end);
 
 /* FUNCTIONS TO SETUP THE SORT */
 void	setup_sorting(int argc, char **argv);
-int		*make_int_array(t_stacks **stacks, int len_chunck);
+int		*make_int_array(t_list *stack);
 int		*make_ints_array(int argc, char **argv);
 #endif

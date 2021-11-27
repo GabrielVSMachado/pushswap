@@ -1,5 +1,5 @@
 NAME := push_swap
-CFLAGS := -Wall -Werror -Wextra -g
+CFLAGS := -Wall -Werror -Wextra -O3
 RM := rm -rf
 CC := gcc
 
@@ -24,7 +24,7 @@ OBJ_TEST := $(SRC_TEST:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # MANDATORY PART
 FILES_UTILS := moviment_functions.c utils_check_parser.c utils.c sorting_algorithm_utils.c quick_sort.c\
-			   sorting_algorithm_utils2.c sorting_algorithm_utils3.c
+			   sorting_algorithm_utils2.c sorting_algorithm_utils3.c sorting_algorithm_utils4.c
 FILES := main.c sorting_algorithm.c init_sorting.c $(FILES_UTILS)
 
 SRC := $(addprefix $(SRC_DIR)/,$(FILES))
@@ -81,5 +81,6 @@ bonus:  $(LIBFT) $(OBJ_BONUS) $(OBJ_UTILS_BONUS)
 
 test: $(LIBFT) $(OBJ_TEST) $(OBJ_UTILS)
 	$(CC) $(OBJ_TEST) $(OBJ_UTILS) -g $(HEADERS_TEST) -o $(TEST) $(LIBRARY) -lrt -lm
-
+	@./$(TEST)
+	@$(MAKE) fclean > /dev/null
 .PHONY: all clean fclean re bonus test

@@ -53,10 +53,7 @@ static int	treat_str_read(char *src, char **dst)
 	{
 		*dst = ft_strdup(src);
 		if (!*dst)
-		{
-			free(src);
 			return (gnl_ERROR);
-		}
 	}
 	else
 	{

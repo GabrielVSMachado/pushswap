@@ -33,11 +33,12 @@ int	check_chunck_sorted_in_b(t_list *lst, int lenght)
 	return (1);
 }
 
-int	less_than_mid_point(t_list *lst, int mid_point)
+int	less_than_mid_point(t_list *lst, int mid_point, int lower)
 {
 	while (lst)
 	{
-		if (*(int *)lst->content < mid_point)
+		if (*(int *)lst->content < mid_point
+			&& *(int *)lst->content != lower)
 			return (1);
 		lst = lst->next;
 	}
@@ -47,19 +48,22 @@ int	less_than_mid_point(t_list *lst, int mid_point)
 void	do_operation(int (*op)(), t_list **lst, const char *name_op)
 {
 	op(lst);
-	ft_putendl_fd((char *)name_op, 1);
+	if (name_op != NULL)
+		ft_putendl_fd((char *)name_op, 1);
 }
 
-void	partition(t_list **from, t_list **to, int mid_point)
+void	partition(t_list **from, t_list **to, int mid_point, int lower)
 {
-	while (less_than_mid_point(*from, mid_point))
+	while (less_than_mid_point(*from, mid_point, lower))
 	{
-		if (*(int *)(*from)->content < mid_point)
+		if (*(int *)(*from)->content < mid_point
+				&& *(int *)(*from)->content != lower)
 		{
 			push(from, to);
 			ft_putendl_fd("pb", 1);
 		}
-		else if (*(int *)ft_lstlast(*from)->content < mid_point)
+		else if (*(int *)ft_lstlast(*from)->content < mid_point
+			&& *(int *)ft_lstlast(*from)->content != lower)
 			do_operation(rotate_to_down, from, "rra");
 		else
 			do_operation(rotate_to_up, from, "ra");

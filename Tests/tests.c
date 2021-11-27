@@ -1215,16 +1215,19 @@ MU_TEST(test_check_chunk_sorted_with_one_element)
 MU_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true)
 {
 	t_list	*head;
-	int		nums[] = {1, 2};
+	int		nums[] = {1, 2, -1};
 
 	head = (t_list *)calloc(sizeof(t_list), 1);
 	head->next = (t_list *)calloc(sizeof(t_list), 1);
+	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
 
 	head->content = nums;
 	head->next->content = nums + 1;
+	head->next->next->content = nums + 2;
 
-	mu_check(less_than_mid_point(head, 2) == TRUE);
+	mu_check(less_than_mid_point(head, 2, 1) == TRUE);
 
+	free(head->next->next);
 	free(head->next);
 	free(head);
 }
@@ -1238,7 +1241,7 @@ MU_TEST(test_with_one_number_expected_false)
 
 	head->content = nums;
 
-	mu_check(less_than_mid_point(head, 1) == FALSE);
+	mu_check(less_than_mid_point(head, 1, 1) == FALSE);
 
 	free(head);
 }
@@ -1256,7 +1259,7 @@ MU_TEST(test_with_three_numbers_none_are_less_than_mid_point)
 	head->next->content = num + 1;
 	head->next->next->content = num + 2;
 
-	mu_check(less_than_mid_point(head, 2) == FALSE);
+	mu_check(less_than_mid_point(head, 2, 2) == FALSE);
 
 	free(head->next->next);
 	free(head->next);
@@ -1561,17 +1564,17 @@ MU_TEST(test_array_with_eight_elements_expected_sending_four_to_the_other_stack)
 	head_a->next->next->next->next->next->next->content = num + 6;
 	head_a->next->next->next->next->next->next->next->content = num + 7;
 
-	partition(&head_a, &head_b, num[4]);
-	partition(&head_a, &head_b, num[6]);
+	partition(&head_a, &head_b, num[4], num[0]);
+	partition(&head_a, &head_b, num[6], num[0]);
 
-	mu_assert_int_eq(6, *(int *)head_b->content);
-	mu_assert_int_eq(5, *(int *)head_b->next->content);
-	mu_assert_int_eq(4, *(int *)head_b->next->next->content);
-	mu_assert_int_eq(3, *(int *)head_b->next->next->next->content);
-	mu_assert_int_eq(2, *(int *)head_b->next->next->next->next->content);
-	mu_assert_int_eq(1, *(int *)head_b->next->next->next->next->next->content);
-	mu_assert_int_eq(7, *(int *)head_a->content);
-	mu_assert_int_eq(8, *(int *)head_a->next->content);
+	mu_assert_int_eq(7, *(int *)head_b->content);
+	mu_assert_int_eq(6, *(int *)head_b->next->content);
+	mu_assert_int_eq(5, *(int *)head_b->next->next->content);
+	mu_assert_int_eq(4, *(int *)head_b->next->next->next->content);
+	mu_assert_int_eq(3, *(int *)head_b->next->next->next->next->content);
+	mu_assert_int_eq(2, *(int *)head_b->next->next->next->next->next->content);
+	mu_assert_int_eq(8, *(int *)head_a->content);
+	mu_assert_int_eq(1, *(int *)head_a->next->content);
 
 	free(head_b->next->next->next->next->next);
 	free(head_b->next->next->next->next);
@@ -1667,11 +1670,13 @@ MU_TEST(test_make_array_with_ten_elements)
 }
 
 /* TEST FUNCTION FIND_ELEMENT */
+
 MU_TEST(test_lst_with_4_elements_expected_element_next_96_prev_null)
 {
 	t_list	*head;
 	t_list	*next;
 	t_list	*prev;
+	int		*ord_array;
 
 	head = calloc(sizeof(t_list), 1);
 	head->next = calloc(sizeof(t_list), 1);
@@ -1687,8 +1692,10 @@ MU_TEST(test_lst_with_4_elements_expected_element_next_96_prev_null)
 	*(int *)head->next->content = 97;
 	*(int *)head->next->next->content = 98;
 	*(int *)head->next->next->next->content = 99;
+	ord_array = make_int_array(head);
 
-	mu_check(find_the_next_and_prev_element(head, 94, &next, &prev) == 1);
+	next = find_element(head, 94, ord_array, cmp_higher);
+	prev = find_element(head, 94, ord_array, cmp_lower);
 
 	mu_check(prev == NULL);
 	mu_assert_int_eq(96, *(int *)next->content);
@@ -1702,6 +1709,7 @@ MU_TEST(test_lst_with_4_elements_expected_element_next_96_prev_null)
 	free(head->next->next);
 	free(head->next);
 	free(head);
+	free(ord_array);
 }
 
 MU_TEST(test_lst_with_4_elements_expected_next_92_prev_85)
@@ -1709,6 +1717,7 @@ MU_TEST(test_lst_with_4_elements_expected_next_92_prev_85)
 	t_list	*head;
 	t_list	*next;
 	t_list	*prev;
+	int		*ord_array;
 
 	head = calloc(sizeof(t_list), 1);
 	head->next = calloc(sizeof(t_list), 1);
@@ -1724,8 +1733,10 @@ MU_TEST(test_lst_with_4_elements_expected_next_92_prev_85)
 	*(int *)head->next->content = 98;
 	*(int *)head->next->next->content = 85;
 	*(int *)head->next->next->next->content = 92;
+	ord_array = make_int_array(head);
 
-	mu_check(find_the_next_and_prev_element(head, 91, &next, &prev) == 1);
+	next = find_element(head, 91, ord_array, cmp_higher);
+	prev = find_element(head, 91, ord_array, cmp_lower);
 
 	mu_assert_int_eq(92, *(int *)next->content);
 	mu_assert_int_eq(85, *(int *)prev->content);
@@ -1739,6 +1750,7 @@ MU_TEST(test_lst_with_4_elements_expected_next_92_prev_85)
 	free(head->next->next);
 	free(head->next);
 	free(head);
+	free(ord_array);
 }
 
 MU_TEST(test_lst_with_20_elements_expected_next_element_76_prev_12)
@@ -1746,6 +1758,7 @@ MU_TEST(test_lst_with_20_elements_expected_next_element_76_prev_12)
 	t_list	*head;
 	t_list	*next;
 	t_list	*prev;
+	int		*ord_array;
 
 	head = calloc(sizeof(t_list), 1);
 	head->next = calloc(sizeof(t_list), 1);
@@ -1810,7 +1823,9 @@ MU_TEST(test_lst_with_20_elements_expected_next_element_76_prev_12)
 	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 77;
 	*(int *)head->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->next->content = 76;
 
-	mu_check(find_the_next_and_prev_element(head, 13, &next, &prev) == 1);
+	ord_array = make_int_array(head);
+	next = find_element(head, 13, ord_array, cmp_higher);
+	prev = find_element(head, 13, ord_array, cmp_lower);
 
 	mu_assert_int_eq(12, *(int *)prev->content);
 	mu_assert_int_eq(76, *(int *)next->content);
@@ -1856,6 +1871,7 @@ MU_TEST(test_lst_with_20_elements_expected_next_element_76_prev_12)
 	free(head->next->next);
 	free(head->next);
 	free(head);
+	free(ord_array);
 }
 
 MU_TEST(test_lst_with_5_elements_expected_next_96_prev_94)
@@ -1863,6 +1879,7 @@ MU_TEST(test_lst_with_5_elements_expected_next_96_prev_94)
 	t_list	*head;
 	t_list	*next;
 	t_list	*prev;
+	int		*ord_array;
 
 	head = calloc(sizeof(t_list), 1);
 	head->next = calloc(sizeof(t_list), 1);
@@ -1881,8 +1898,10 @@ MU_TEST(test_lst_with_5_elements_expected_next_96_prev_94)
 	*(int *)head->next->next->content = 97;
 	*(int *)head->next->next->next->content = 98;
 	*(int *)head->next->next->next->next->content = 99;
+	ord_array = make_int_array(head);
 
-	mu_check(find_the_next_and_prev_element(head, 95, &next, &prev) == 1);
+	next = find_element(head, 95, ord_array, cmp_higher);
+	prev = find_element(head, 95, ord_array, cmp_lower);
 
 	mu_assert_int_eq(96, *(int *)next->content);
 	mu_assert_int_eq(94, *(int *)prev->content);
@@ -1898,6 +1917,7 @@ MU_TEST(test_lst_with_5_elements_expected_next_96_prev_94)
 	free(head->next->next);
 	free(head->next);
 	free(head);
+	free(ord_array);
 }
 
 MU_TEST_SUITE(suite_swap)

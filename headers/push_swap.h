@@ -15,11 +15,31 @@
 # define LEN_MIN_INT 11
 # define ERROR -1
 # define SUCCESS 1
+# define INT_MAX 0xFFFFFF
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <limits.h>
 # include "libft.h"
+
+typedef struct s_less_movs
+{
+	int				act_stack_a;
+	int				act_stack_b;
+	unsigned int	which_mov_a:1;
+	unsigned int	which_mov_b:1;
+}	t_less;
+
+struct s_moviments
+{
+	int				n_ra;
+	int				n_rra;
+	unsigned int	which_mov_lower:1;
+};
+
+struct s_calc_moviments
+{
+	struct s_moviments	lower_b_element;
+	struct s_moviments	higher_than_b_element;
+	struct s_moviments	b_element;
+};
 
 typedef struct s_stacks
 {
@@ -47,17 +67,23 @@ void	clear_stacks(t_stacks *stacks);
 
 /* HELPERS FUNCTIONS TO SORTING ALGORITHM */
 int		check_chunck_sorted_in_b(t_list *lst, int lenght);
-int		less_than_mid_point(t_list *lst, int mid_point);
-void	do_operation(int (*op)(), t_list **lst, const char *name_op);
-void	partition(t_list **stack_from, t_list **stack_to, int mid_point);
+int		less_than_mid_point(t_list *lst, int mid_point, int lower);
 int		chunk_lenght(int mid_point, int *array);
 int		check_sorted(t_list *stack);
-int		find_the_next_and_prev_element(t_list *stack, int element,
-			t_list **next, t_list **prev);
 int		index_of_element(t_list *lst, t_list *element);
-int		number_of_ra(t_list *stack, const t_list *element);
-int		number_of_rra(t_list *stack, const t_list *element);
-int		make_decision(t_stacks **stacks, int *len_chunck);
+int		number_of_r(t_list *stack, const t_list *element);
+int		number_of_rr(t_list *stack, const t_list *element);
+int		make_decision(t_stacks **stacks);
+void	do_operation(int (*op)(), t_list **lst, const char *name_op);
+void	partition(t_list **stack_from, t_list **stack_to, int mid_point,
+			int lower);
+t_list	*find_element(t_list *stack, int element,
+			int *ord_array, int (*cmp)(int, int, int*));
+t_less	*calculate_moviments(t_stacks **stacks);
+
+/* FUNCTIONS TO COMPARE IN FUNCTION FIND_ELEMENT */
+int		cmp_lower(int element, int index, int *ord_array);
+int		cmp_higher(int element, int index, int *ord_array);
 
 /* FUNCTION TO EXECUTE SORTING */
 int		sorting(int **ord_array, t_stacks *stacks, int size_ord_array);

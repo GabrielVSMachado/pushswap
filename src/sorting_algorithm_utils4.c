@@ -12,6 +12,34 @@
 
 #include "push_swap.h"
 
+void	exec_action(struct s_less_movs *action, t_stacks **stacks)
+{
+	while ((action->which_mov_a == 1 && action->which_mov_b == 1)
+		&& (action->act_stack_a && action->act_stack_b))
+	{
+		do_operation(rotate_to_down, &(*stacks)->stack_a, "rrr");
+		do_operation(rotate_to_down, &(*stacks)->stack_b, NULL);
+		action->act_stack_a--;
+		action->act_stack_b--;
+	}
+	while ((action->which_mov_a == 0 && action->which_mov_b == 0)
+		&& (action->act_stack_a && action->act_stack_b))
+	{
+		do_operation(rotate_to_up, &(*stacks)->stack_a, "rr");
+		do_operation(rotate_to_up, &(*stacks)->stack_b, NULL);
+		action->act_stack_a--;
+		action->act_stack_b--;
+	}
+	while (action->which_mov_a && action->act_stack_a-- > 0)
+		do_operation(rotate_to_down, &(*stacks)->stack_a, "rra");
+	while (!action->which_mov_a && action->act_stack_a-- > 0)
+		do_operation(rotate_to_up, &(*stacks)->stack_a, "ra");
+	while (action->which_mov_b && action->act_stack_b-- > 0)
+		do_operation(rotate_to_down, &(*stacks)->stack_b, "rrb");
+	while (!action->which_mov_b && action->act_stack_b-- > 0)
+		do_operation(rotate_to_up, &(*stacks)->stack_b, "rb");
+}
+
 int	cmp_lower(int element, int index, int *ord_array)
 {
 	return (index - 1 >= 0 && element == ord_array[index - 1]);

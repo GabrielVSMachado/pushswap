@@ -83,57 +83,22 @@ int	number_of_r(t_list *stack, const t_list *element)
 int	make_decision(t_stacks **stacks)
 {
 	struct s_less_movs	*action;
+	int					*ord_array;
 
-	action = calculate_moviments(stacks);
-	if (!action)
+	ord_array = make_int_array((*stacks)->stack_a);
+	if (ord_array == NULL)
 		return (ERROR);
-	if (action->which_mov_a != action->which_mov_b)
+	action = (struct s_less_movs *)malloc(sizeof(struct s_less_movs));
+	if (action == NULL)
 	{
-		while (action->which_mov_a && action->act_stack_a-- > 0)
-			do_operation(rotate_to_down, &(*stacks)->stack_a, "rra");
-		while (!action->which_mov_a && action->act_stack_a-- > 0)
-			do_operation(rotate_to_up, &(*stacks)->stack_a, "ra");
-		while (action->which_mov_b && action->act_stack_b-- > 0)
-			do_operation(rotate_to_down, &(*stacks)->stack_b, "rrb");
-		while (!action->which_mov_b && action->act_stack_b-- > 0)
-			do_operation(rotate_to_up, &(*stacks)->stack_b, "rb");
-		push(&(*stacks)->stack_b, &(*stacks)->stack_a);
-		ft_putendl_fd("pa", 1);
+		free(ord_array);
+		return (ERROR);
 	}
-	else
-	{
-		if (action->which_mov_a && action->which_mov_b)
-		{
-			while (action->act_stack_a && action->act_stack_b)
-			{
-				do_operation(rotate_to_down, &(*stacks)->stack_a, "rrr");
-				do_operation(rotate_to_down, &(*stacks)->stack_b, NULL);
-				action->act_stack_a--;
-				action->act_stack_b--;
-			}
-			while (action->act_stack_a-- > 0)
-				do_operation(rotate_to_down, &(*stacks)->stack_a, "rra");
-			while (action->act_stack_b-- > 0)
-				do_operation(rotate_to_down, &(*stacks)->stack_b, "rrb");
-			push(&(*stacks)->stack_b, &(*stacks)->stack_a);
-			ft_putendl_fd("pa", 1);
-		}
-		else
-		{
-			while (action->act_stack_a && action->act_stack_b)
-			{
-				do_operation(rotate_to_up, &(*stacks)->stack_a, "rr");
-				do_operation(rotate_to_up, &(*stacks)->stack_b, NULL);
-				action->act_stack_a--;
-				action->act_stack_b--;
-			}
-			while (action->act_stack_a-- > 0)
-				do_operation(rotate_to_up, &(*stacks)->stack_a, "ra");
-			while (action->act_stack_b-- > 0)
-				do_operation(rotate_to_up, &(*stacks)->stack_b, "rb");
-			push(&(*stacks)->stack_b, &(*stacks)->stack_a);
-			ft_putendl_fd("pa", 1);
-		}
-	}
-	return (free(action), SUCCESS);
+	calculate_moviments(stacks, ord_array, action);
+	free(ord_array);
+	exec_action(action, stacks);
+	free(action);
+	push(&(*stacks)->stack_b, &(*stacks)->stack_a);
+	ft_putendl_fd("pa", 1);
+	return (SUCCESS);
 }

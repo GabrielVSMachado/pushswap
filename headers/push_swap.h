@@ -15,9 +15,15 @@
 # define LEN_MIN_INT 11
 # define ERROR -1
 # define SUCCESS 1
-# define INT_MAX 0xFFFFFF
+# define INT_MAX 0x7FFFFFFF
 
 # include "libft.h"
+
+struct s_norminette
+{
+	int	prev_value;
+	int	current_value;
+};
 
 typedef struct s_less_movs
 {
@@ -29,8 +35,8 @@ typedef struct s_less_movs
 
 struct s_moviments
 {
-	int				n_ra;
-	int				n_rra;
+	int				n_r;
+	int				n_rr;
 	unsigned int	which_mov_lower:1;
 };
 
@@ -79,7 +85,11 @@ void	partition(t_list **stack_from, t_list **stack_to, int mid_point,
 			int lower);
 t_list	*find_element(t_list *stack, int element,
 			int *ord_array, int (*cmp)(int, int, int*));
-t_less	*calculate_moviments(t_stacks **stacks);
+void	calculate_moviments(t_stacks **stacks, int *ord_array,
+			struct s_less_movs *action);
+void	exec_action(struct s_less_movs *action, t_stacks **stacks);
+void	compare_movs(struct s_less_movs *action, struct s_moviments *movs_a,
+			struct s_moviments *movs_b, struct s_norminette *values);
 
 /* FUNCTIONS TO COMPARE IN FUNCTION FIND_ELEMENT */
 int		cmp_lower(int element, int index, int *ord_array);

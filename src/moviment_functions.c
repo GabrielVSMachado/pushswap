@@ -29,7 +29,7 @@ int	push(t_list **from, t_list **to)
 {
 	t_list	*tmp;
 
-	if (!from || !to)
+	if (!from || !to || !*from)
 		return (1);
 	tmp = *to;
 	(*to) = (*from);

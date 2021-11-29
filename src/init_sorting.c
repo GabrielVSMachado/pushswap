@@ -22,8 +22,12 @@ void	setup_sorting(int argc, char **argv)
 	ord_array = make_ints_array(argc, argv);
 	quick_sort(ord_array, 0, argc - 2);
 	if (!check_sorted(stacks.stack_a))
-		if (sorting(&ord_array, &stacks, argc - 1) == ERROR)
+	{
+		if (ft_lstsize(stacks.stack_a) == 3)
+			sort_three_elements(&stacks, ord_array);
+		else if (sorting(&ord_array, &stacks, argc - 1) == ERROR)
 			exit(_error(&stacks));
+	}
 	free(ord_array);
 	clear_stacks(&stacks);
 }

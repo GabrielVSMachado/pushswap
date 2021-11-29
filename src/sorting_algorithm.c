@@ -12,29 +12,29 @@
 
 #include "push_swap.h"
 
-static void	sort_three_elements(t_stacks **stacks, int *ord_array)
+void	sort_three_elements(t_stacks *stacks, int *ord_array)
 {
-	if (*(int *)ft_lstlast((*stacks)->stack_a)->content == ord_array[2])
-		do_operation(swap, &(*stacks)->stack_a, "sa");
-	else if (*(int *)ft_lstlast((*stacks)->stack_a)->content == ord_array[1])
+	if (*(int *)ft_lstlast((stacks)->stack_a)->content == ord_array[2])
+		do_operation(swap, &(stacks)->stack_a, "sa");
+	else if (*(int *)ft_lstlast((stacks)->stack_a)->content == ord_array[1])
 	{
-		if (*(int *)(*stacks)->stack_a->content == ord_array[0])
+		if (*(int *)(stacks)->stack_a->content == ord_array[0])
 		{
-			do_operation(rotate_to_down, &(*stacks)->stack_a, "rra");
-			do_operation(swap, &(*stacks)->stack_a, "sa");
+			do_operation(rotate_to_down, &(stacks)->stack_a, "rra");
+			do_operation(swap, &(stacks)->stack_a, "sa");
 		}
 		else
-			do_operation(rotate_to_up, &(*stacks)->stack_a, "ra");
+			do_operation(rotate_to_up, &(stacks)->stack_a, "ra");
 	}
 	else
 	{
-		if (*(int *)(*stacks)->stack_a->content == ord_array[2])
+		if (*(int *)(stacks)->stack_a->content == ord_array[2])
 		{
-			do_operation(swap, &(*stacks)->stack_a, "sa");
-			do_operation(rotate_to_down, &(*stacks)->stack_a, "rra");
+			do_operation(swap, &(stacks)->stack_a, "sa");
+			do_operation(rotate_to_down, &(stacks)->stack_a, "rra");
 		}
 		else
-			do_operation(rotate_to_down, &(*stacks)->stack_a, "rra");
+			do_operation(rotate_to_down, &(stacks)->stack_a, "rra");
 	}
 }
 
@@ -72,11 +72,6 @@ int	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
 	int		len;
 	int		lower_element;
 
-	if (ft_lstsize(stacks->stack_a) == 3)
-	{
-		sort_three_elements(&stacks, *ord_array);
-		return (SUCCESS);
-	}
 	tmp = *ord_array;
 	lower_element = tmp[0];
 	while (ft_lstsize(stacks->stack_a) > 3)
@@ -89,8 +84,9 @@ int	sorting(int **ord_array, t_stacks *stacks, int size_ord_array)
 	}
 	tmp = make_int_array(stacks->stack_a);
 	if (!check_sorted(stacks->stack_a))
-		sort_three_elements(&stacks, tmp);
+		sort_three_elements(stacks, tmp);
+	free(tmp);
 	if (sort_b(&stacks, lower_element) == ERROR)
-		return (free(tmp), ERROR);
-	return (free(tmp), SUCCESS);
+		return (ERROR);
+	return (SUCCESS);
 }

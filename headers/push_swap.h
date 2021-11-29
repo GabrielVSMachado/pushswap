@@ -91,6 +91,9 @@ void	exec_action(struct s_less_movs *action, t_stacks **stacks);
 void	compare_movs(struct s_less_movs *action, struct s_moviments *movs_a,
 			struct s_moviments *movs_b, struct s_norminette *values);
 
+/* FUNCTION TO SOLVE STACK WITH THREE ELEMENTS */
+void	sort_three_elements(t_stacks *stacks, int *ord_array);
+
 /* FUNCTIONS TO COMPARE IN FUNCTION FIND_ELEMENT */
 int		cmp_lower(int element, int index, int *ord_array);
 int		cmp_higher(int element, int index, int *ord_array);

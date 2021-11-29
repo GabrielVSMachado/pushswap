@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void	setup_moviment(t_list *stack, t_list *element,
+static void	setup_moviment(t_list *stack, int element,
 		struct s_moviments *movs)
 {
 	movs->n_r = number_of_r(stack, element);
@@ -26,14 +26,20 @@ static void	setup_moviment(t_list *stack, t_list *element,
 static void	setup_all_moviments(t_stacks **stacks,
 		struct s_calc_moviments *movs, int *ord_array, t_list *tmp_stack)
 {
-	setup_moviment((*stacks)->stack_b, tmp_stack, &movs->b_element);
-	setup_moviment((*stacks)->stack_a, find_element((*stacks)->stack_a,
-			*(int *)tmp_stack->content, ord_array, cmp_lower),
+	t_list	*lower_than_b_element;
+	t_list	*higher_than_b_element;
+
+	lower_than_b_element = find_element((*stacks)->stack_a,
+			*(int *)tmp_stack->content, ord_array, cmp_lower);
+	higher_than_b_element = find_element((*stacks)->stack_a,
+			*(int *)tmp_stack->content, ord_array, cmp_higher);
+	setup_moviment((*stacks)->stack_b, *(int *)tmp_stack->content,
+		&movs->b_element);
+	setup_moviment((*stacks)->stack_a, *(int *)lower_than_b_element->content,
 		&(movs->lower_b_element));
 	movs->lower_b_element.n_r++;
 	movs->lower_b_element.n_rr--;
-	setup_moviment((*stacks)->stack_a, find_element((*stacks)->stack_a,
-			*(int *)tmp_stack->content, ord_array, cmp_higher),
+	setup_moviment((*stacks)->stack_a, *(int *)higher_than_b_element->content,
 		&(movs->higher_than_b_element));
 }
 

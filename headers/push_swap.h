@@ -77,8 +77,8 @@ int		less_than_mid_point(t_list *lst, int mid_point, int lower);
 int		chunk_lenght(int mid_point, int *array);
 int		check_sorted(t_list *stack);
 int		index_of_element(t_list *lst, t_list *element);
-int		number_of_r(t_list *stack, const t_list *element);
-int		number_of_rr(t_list *stack, const t_list *element);
+int		number_of_r(t_list *stack, int element);
+int		number_of_rr(t_list *stack, int element);
 int		make_decision(t_stacks **stacks);
 void	do_operation(int (*op)(), t_list **lst, const char *name_op);
 void	partition(t_list **stack_from, t_list **stack_to, int mid_point,

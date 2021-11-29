@@ -47,7 +47,7 @@ int	*make_int_array(t_list *lst)
 /* calculate the number of rr(a or b)'s instruction
  * to put on top or on bottom of
  * stack the element */
-int	number_of_rr(t_list *stack, const t_list *element)
+int	number_of_rr(t_list *stack, int element)
 {
 	int		result;
 	int		size;
@@ -56,7 +56,7 @@ int	number_of_rr(t_list *stack, const t_list *element)
 	size = ft_lstsize(stack);
 	while (stack)
 	{
-		if (*(int *)stack->content == *(int *)element->content)
+		if (*(int *)stack->content == element)
 			break ;
 		result++;
 		stack = stack->next;
@@ -67,12 +67,12 @@ int	number_of_rr(t_list *stack, const t_list *element)
 /* calculate the number of r(a or b)'s instruction
  * to put the higher on top or the lower on bottom of
  * stack the element */
-int	number_of_r(t_list *stack, const t_list *element)
+int	number_of_r(t_list *stack, int element)
 {
 	int		result;
 
 	result = 0;
-	while (*(int *)stack->content != *(int *)element->content)
+	while (*(int *)stack->content != element)
 	{
 		result++;
 		stack = stack->next;

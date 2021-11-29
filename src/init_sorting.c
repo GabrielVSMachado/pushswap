@@ -24,7 +24,6 @@ void	setup_sorting(int argc, char **argv)
 	if (!check_sorted(stacks.stack_a))
 		if (sorting(&ord_array, &stacks, argc - 1) == ERROR)
 			exit(_error(&stacks));
-	if (ord_array)
-		free(ord_array);
+	free(ord_array);
 	clear_stacks(&stacks);
 }

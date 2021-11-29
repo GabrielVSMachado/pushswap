@@ -16,13 +16,13 @@ int	main(int argc, char *argv[])
 {
 	if (argc < 2)
 	{
-		write(2, "Error\n", 6);
+		ft_putendl_fd("Error", 2);
 		exit(_error(NULL));
 	}
 	if (check_isdigit(argc, argv) || check_repeated(argc, argv)
 		|| check_greater_than_max_or_less_than_min_int(argc, argv))
 	{
-		write(2, "Error\n", 6);
+		ft_putendl_fd("Error", 2);
 		exit(_error(NULL));
 	}
 	setup_sorting(argc, argv);

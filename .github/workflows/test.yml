@@ -19,14 +19,3 @@ jobs:
 
       - name: make test
         run: make test
-
-      - name: put output of test in file
-        run: |
-          ./test > test_output
-        shell: bash
-      
-      - name: upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-file
-          path: test_output

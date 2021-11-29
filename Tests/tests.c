@@ -145,6 +145,18 @@ MU_TEST(test_push_no_number_from_a_to_b_when_a_is_NULL)
 	mu_check(head_b == NULL);
 }
 
+MU_TEST(test_push_no_number_from_a_to_b_when_a_is_variable_with_NULL)
+{
+	t_list	*head_b;
+	t_list	*head_a;
+
+	head_b = NULL;
+	head_a = NULL;
+
+	mu_check(push(&head_a, &head_b) == 1);
+	mu_check(head_b == NULL);
+}
+
 MU_TEST(test_push_one_number_from_a_to_b_when_b_is_NULL)
 {
 	t_list	*head_a;
@@ -1938,6 +1950,7 @@ MU_TEST_SUITE(suite_push)
 	MU_RUN_TEST(test_push_one_number_from_a_to_b_then_return_to_a);
 	MU_RUN_TEST(test_push_one_number_from_a_to_b_then_push_two_number_from_b_to_a);
 	MU_RUN_TEST(test_push_one_number_from_a_to_b_when_b_is_NULL);
+	MU_RUN_TEST(test_push_no_number_from_a_to_b_when_a_is_variable_with_NULL);
 }
 
 

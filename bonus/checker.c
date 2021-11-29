@@ -34,19 +34,19 @@ static int	check_sorting_lst(struct s_stacks *s)
 	t_list	*tmp;
 
 	if (s->stack_b != NULL)
-		return (1);
+		return (0);
 	tmp = s->stack_a;
 	while (tmp->next)
 	{
 		if (*(int *)tmp->content > *(int *)tmp->next->content)
 		{
 			ft_lstclear(&s->stack_a, free);
-			return (1);
+			return (0);
 		}
 		tmp = tmp->next;
 	}
 	ft_lstclear(&s->stack_a, free);
-	return (0);
+	return (1);
 }
 
 static int	checker_valid_movement(struct s_stacks *s, char *movement)
@@ -83,27 +83,30 @@ static void	init_checker(int size_array, char **numbers_as_str)
 	{
 		if (checker_valid_movement(&s, movement))
 		{
-			write(2, "Error", 5);
+			ft_putendl_fd("Error", 2);
 			exit(EXIT_FAILURE);
 		}
 		free(movement);
 	}
-	if (check_sorting_lst(&s))
-		write(1, "KO\n", 3);
+	if (!check_sorting_lst(&s))
+		ft_putendl_fd("KO", 1);
 	else
-		write(1, "OK\n", 3);
+		ft_putendl_fd("OK", 1);
 	free(movement);
 }
 
 int	main(int argc, char *argv[])
 {
 	if (argc < 2)
+	{
+		ft_putendl_fd("Error", 2);
 		exit(EXIT_FAILURE);
+	}
 	if (check_isdigit(argc, argv)
 		|| check_greater_than_max_or_less_than_min_int(argc, argv)
 		||check_repeated(argc, argv))
 	{
-		write(2, "Error", 5);
+		ft_putendl_fd("Error", 2);
 		exit(EXIT_FAILURE);
 	}
 	init_checker(argc, argv);

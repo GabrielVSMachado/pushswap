@@ -43,7 +43,7 @@ static void	put_lower_element_on_top(int lower_element, t_stacks **stacks)
 	int		n_ra;
 	int		n_rra;
 
-		n_ra = number_of_r((*stacks)->stack_a, lower_element);
+	n_ra = number_of_r((*stacks)->stack_a, lower_element);
 	n_rra = number_of_rr((*stacks)->stack_a, lower_element);
 	if (n_ra < n_rra)
 	{

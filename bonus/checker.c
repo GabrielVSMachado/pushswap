@@ -45,7 +45,6 @@ static int	check_sorting_lst(struct s_stacks *s)
 		}
 		tmp = tmp->next;
 	}
-	ft_lstclear(&s->stack_a, free);
 	return (1);
 }
 
@@ -84,7 +83,8 @@ static void	init_checker(int size_array, char **numbers_as_str)
 		if (checker_valid_movement(&s, movement))
 		{
 			ft_putendl_fd("Error", 2);
-			exit(EXIT_FAILURE);
+			free(movement);
+			exit(_error(&s));
 		}
 		free(movement);
 	}
@@ -92,6 +92,7 @@ static void	init_checker(int size_array, char **numbers_as_str)
 		ft_putendl_fd("KO", 1);
 	else
 		ft_putendl_fd("OK", 1);
+	clear_stacks(&s);
 	free(movement);
 }
 

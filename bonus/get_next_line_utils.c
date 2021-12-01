@@ -76,6 +76,8 @@ char	*ft_strchr(const char *str, int c)
 {
 	size_t	counter;
 
+	if (!str)
+		return (NULL);
 	counter = 0;
 	if (c == '\0')
 		return ((char *)(str + ft_strlen(str)));
@@ -93,6 +95,8 @@ char	*ft_strdup(const char *src)
 	char	*dst;
 	int		counter_src;
 
+	if (!src || !*src)
+		return (NULL);
 	dst = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
 	if (!dst)
 		return (NULL);

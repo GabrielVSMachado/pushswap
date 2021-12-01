@@ -58,7 +58,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER_DIR)/push_swap.h
 
 $(OBJ_DIR)/%.o: $(BONUS_DIR)/%.c $(HEADER_DIR)/checker.h
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -D BUFFER_SIZE=4 -o $@
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -D BUFFER_SIZE=3 -o $@
 
 $(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)

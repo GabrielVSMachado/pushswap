@@ -22,17 +22,6 @@ int	chunk_lenght(int mid_point, int *array)
 	return (lenght);
 }
 
-int	check_chunck_sorted_in_b(t_list *lst, int lenght)
-{
-	while (--lenght)
-	{
-		if (*(int *)lst->content < *(int *)lst->next->content)
-			return (0);
-		lst = lst->next;
-	}
-	return (1);
-}
-
 int	less_than_mid_point(t_list *lst, int mid_point, int lower)
 {
 	while (lst)

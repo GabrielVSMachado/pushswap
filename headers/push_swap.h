@@ -72,7 +72,6 @@ int		_error(t_stacks *stacks);
 void	clear_stacks(t_stacks *stacks);
 
 /* HELPERS FUNCTIONS TO SORTING ALGORITHM */
-int		check_chunck_sorted_in_b(t_list *lst, int lenght);
 int		less_than_mid_point(t_list *lst, int mid_point, int lower);
 int		chunk_lenght(int mid_point, int *array);
 int		check_sorted(t_list *stack);

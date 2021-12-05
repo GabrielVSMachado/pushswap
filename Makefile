@@ -1,7 +1,13 @@
 NAME := push_swap
 CFLAGS := -Wall -Werror -Wextra -O3
 RM := rm -rf
-CC := gcc
+DISTRO:=$(findstring Arch,$(file < /etc/os-release))
+
+ifeq ($(DISTRO),Arch)
+	CC := gcc
+else
+	CC := clang
+endif
 
 SRC_DIR := src
 OBJ_DIR := obj

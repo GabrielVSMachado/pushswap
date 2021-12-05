@@ -1164,65 +1164,6 @@ MU_TEST(test__error_receive_stack_a_not_NULL_and_stack_b_not_NULL_expected_no_me
 	mu_check(_error(&stacks) == 1);
 }
 
-/* TEST FUNCTION CHECK_SORTED_CHUNCK IN B*/
-
-MU_TEST(test_check_sorted_with_unsorted_lst_with_three_elements)
-{
-	t_list	*head;
-	int		n_arr[3] = {1, 2, 3};
-
-	head = (t_list *)calloc(sizeof(t_list), 1);
-	head->next = (t_list *)calloc(sizeof(t_list), 1);
-	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
-
-	head->content = n_arr + 2;
-	head->next->content = n_arr;
-	head->next->next->content = n_arr + 1;
-
-	mu_check(check_chunck_sorted_in_b(head, 3) == 0);
-
-	free(head->next->next);
-	free(head->next);
-	free(head);
-}
-
-
-MU_TEST(test_check_sorted_with_sorted_lst_with_three_elements)
-{
-	t_list	*head;
-	int		n_arr[3] = {1, 2, 3};
-
-	head = (t_list *)calloc(sizeof(t_list), 1);
-	head->next = (t_list *)calloc(sizeof(t_list), 1);
-	head->next->next = (t_list *)calloc(sizeof(t_list), 1);
-
-	head->content = n_arr + 2;
-	head->next->content = n_arr + 1;
-	head->next->next->content = n_arr;
-
-	mu_check(check_chunck_sorted_in_b(head, 3) == 1);
-
-	free(head->next->next);
-	free(head->next);
-	free(head);
-}
-
-
-MU_TEST(test_check_chunk_sorted_with_one_element)
-{
-	t_list	*head;
-
-	head = (t_list *)calloc(sizeof(t_list), 1);
-	head->content = malloc(sizeof(int));
-	*(int *)head->content = 5;
-
-	mu_check(check_chunck_sorted_in_b(head, 1) == 1);
-
-	free(head->content);
-	free(head);
-}
-
-
 /* TEST FUNCTION LESS_THAN_MID_POINT */
 MU_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true)
 {
@@ -2024,14 +1965,6 @@ MU_TEST_SUITE(suite_error)
 	MU_RUN_TEST(test__error_receive_stack_a_not_NULL_and_stack_b_not_NULL_expected_no_memory_leak_and_no_SIGSEV);
 }
 
-MU_TEST_SUITE(suite_check_sorted)
-{
-	MU_RUN_TEST(test_check_sorted_with_unsorted_lst_with_three_elements);
-	MU_RUN_TEST(test_check_sorted_with_sorted_lst_with_three_elements);
-	MU_RUN_TEST(test_check_chunk_sorted_with_one_element);
-}
-
-
 MU_TEST_SUITE(suite_less_than_mid_point)
 {
 	MU_RUN_TEST(test_list_with_two_elements_one_less_than_mid_point_expected_true);
@@ -2095,7 +2028,6 @@ int	main(int argc, char *argv[])
 	MU_RUN_SUITE(suite_make_lst_with_ints);
 	MU_RUN_SUITE(suite_check_greater_than_max_or_less_than_min_int);
 	MU_RUN_SUITE(suite_error);
-	MU_RUN_SUITE(suite_check_sorted);
 	MU_RUN_SUITE(suite_less_than_mid_point);
 	/* MU_RUN_SUITE(suite_do_operation); */
 	MU_RUN_SUITE(suite_quick_sort);
